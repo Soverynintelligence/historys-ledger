@@ -101,8 +101,8 @@ CHIEF UNITED STATES ARMY FORCES, PACIFIC
  
  "2. We hereby proclaim the unconditional surrender to the Allied Powers of the Japanese Imperial General Headquarters and of all Japanese armed forces and all armed forces under the Japanese control wherever situated. 
  
- "3. We hereby command all Japanese forces wherever situated and the Japanese people to cease hostilites forthwith, to preserve and save from damage all ships, aircraft, and military and civil 
-property and to comply with all require ments which my be imposed by the Supreme Commander for the Allied Powers or by agencies of the Japanese Government at his direction. 
+ "3. We hereby command all Japanese forces wherever situated and the Japanese people to cease hostilities forthwith, to preserve and save from damage all ships, aircraft, and military and civil 
+property and to comply with all requirements which may be imposed by the Supreme Commander for the Allied Powers or by agencies of the Japanese Government at his direction. 
  
  "4. We hereby command the Japanese Imperial Headquarters to issue at once orders to the Commanders of all Japanese forces and all forces under Japanese control wherever situated to surrender 
 unconditionally themselves and all forces under their control. 

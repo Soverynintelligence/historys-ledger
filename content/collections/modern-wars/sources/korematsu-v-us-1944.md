@@ -367,7 +367,7 @@ TOYOSABURO KOREMATSU v. UNITED STATES. | Supreme Court | US Law | LII / Legal In
  
  
  2 
- It should be noted, to begin with, that all legal restrictions which curtail the civil rights of a single racial group are immediately suspect. That is not to say that all such restrictions are unconstitutional. It is to say that courts must subject them to the most rigid scrutiny. Pressing public necessity may sometimes pustify the existence of such restrictions; racial antagonism never can. 
+ It should be noted, to begin with, that all legal restrictions which curtail the civil rights of a single racial group are immediately suspect. That is not to say that all such restrictions are unconstitutional. It is to say that courts must subject them to the most rigid scrutiny. Pressing public necessity may sometimes justify the existence of such restrictions; racial antagonism never can. 
  
  
  3 
