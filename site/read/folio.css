@@ -1,0 +1,201 @@
+:root{
+  --paper:#efe4c9;
+  --paper-2:#e7d9ba;
+  --card:#f6eeda;
+  --ink:#2b2419;
+  --ink-2:#5c5140;
+  --ink-3:#8a7d66;
+  --rule:#c8b592;
+  --seal:#8c3a2b;
+  --seal-soft:#a8543f;
+  --serif:"EB Garamond",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:19px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(18px,5vw,32px)}
+.mark{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+/* folio head */
+.folio{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 14px;border-bottom:1px solid var(--rule)}
+h1{font-size:clamp(2rem,6vw,2.9rem);line-height:1.1;font-weight:600;margin:1.6rem 0 .6rem;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--seal)}
+h2{font-size:1.5rem;font-weight:600;margin:0 0 .5rem;line-height:1.2}
+h3{font-size:1.1rem;font-weight:600;margin:0 0 .35rem}
+p{margin:0 0 1rem}
+.sub{color:var(--ink-2);font-size:1.05rem}
+
+/* stage machinery */
+.stage{padding:2.4rem 0;border-bottom:1px solid var(--rule)}
+.stage[hidden]{display:none}
+.stagemark{display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem}
+.numeral{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--seal);border:1px solid var(--rule);padding:.2rem .5rem;border-radius:2px}
+
+/* ── the leaf ──────────────────────────────────────────────────────────────
+   A page turn, not a slide. The sheet pivots on its spine at the left edge,
+   so the motion reads as paper rather than as a carousel: the far edge
+   travels further than the near edge, which is the whole tell.
+
+   Two rules kept it from becoming decoration:
+
+   1. It only fires when the reader advances. Nothing turns on load, on
+      scroll, or on its own — the page moves because a hand moved it.
+   2. The turn is never load-bearing. Content is in normal flow before and
+      after; the transform is applied to a wrapper for the duration and then
+      removed. If the animation is refused or fails, the reader still gets
+      every stage, in order, complete.
+   ────────────────────────────────────────────────────────────────────────── */
+.book{perspective:2200px;perspective-origin:0% 40%}
+.leaf{transform-origin:left center}
+/* NO fill mode, and that is the whole safety property.
+   With `both`, the element holds the keyframe's start state — rotated, opacity
+   0 — whenever the animation is not running. In a backgrounded tab CSS
+   animations are frozen AND timers are throttled, so a reader who clicked and
+   switched tabs came back to a page that was invisible and would not recover.
+   With fill `none` the resting style is the normal one: upright and readable.
+   The turn decorates the arrival; it never gates it. */
+.leaf.turning-in{animation:leaf-in .62s cubic-bezier(.22,.72,.28,1)}
+
+@keyframes leaf-in{
+  from{transform:rotateY(78deg);opacity:0}
+  60%{opacity:1}
+  to{transform:rotateY(0deg);opacity:1}
+}
+/* ONLY the arriving sheet turns.
+   An earlier version also turned the outgoing page away to opacity 0 — but
+   this is one scrolling column, not a spread, so the page you just read has
+   nowhere to go. It animated out and then snapped back into view the moment
+   the class came off, which reads as a glitch rather than as paper. In a book
+   the leaf you finish stays on the stack under the next one; here it stays
+   above, exactly where you left it, and the new sheet drops onto it. */
+
+/* The gutter shadow the spine casts on the sheet beneath. This is what sells
+   the depth — the rotation alone reads as a flat card flipping. It fades as
+   the sheet comes down flat. */
+.leaf.turning-in::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(90deg,rgba(80,62,34,.22),rgba(80,62,34,.06) 32%,transparent 60%);
+  animation:gutter .62s ease-out;
+}
+@keyframes gutter{ from{opacity:1} to{opacity:0} }
+.stage{position:relative}
+
+/* A reader who has asked for less motion gets the content and none of the
+   theatre — not a slower turn, no turn. */
+@media(prefers-reduced-motion:reduce){
+  .leaf.turning-in{animation:none}
+  .leaf.turning-in::before{display:none}
+}
+
+/* the weighing control */
+.scale{margin:1.6rem 0 0;background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.2rem}
+.scale legend{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:0}
+.opts{display:grid;gap:.5rem;margin-top:1rem}
+.opt{
+  display:flex;gap:.75rem;align-items:flex-start;padding:.7rem .85rem;
+  background:transparent;border:1px solid var(--rule);border-radius:2px;
+  font-family:var(--serif);font-size:1rem;color:var(--ink);text-align:left;cursor:pointer;width:100%;
+}
+.opt:hover{background:#f2e8d2}
+.opt[aria-pressed="true"]{border-color:var(--seal);background:#f4e7d4;box-shadow:inset 3px 0 0 var(--seal)}
+.opt .k{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);padding-top:.25rem;flex:none}
+
+/* buttons */
+.btn{
+  font-family:var(--serif);font-size:1rem;background:var(--ink);color:var(--paper);
+  border:1px solid var(--ink);padding:.6rem 1.15rem;border-radius:2px;cursor:pointer;
+}
+.btn:hover{background:#3b3223}
+.btn.quiet{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.quiet:hover{background:#f2e8d2}
+.btn[disabled]{opacity:.4;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;align-items:center}
+:focus-visible{outline:2px solid var(--seal);outline-offset:3px}
+
+/* evidence cards */
+.card{background:var(--card);border:1px solid var(--rule);padding:1.15rem 1.15rem;margin:1rem 0}
+.card .src{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-3);margin-top:.7rem;display:block}
+blockquote{margin:0 0 .2rem;font-size:1.12rem;line-height:1.5;font-style:italic}
+.gloss{font-size:.98rem;color:var(--ink-2);margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--rule)}
+.two{display:grid;gap:1rem}
+@media(min-width:720px){.two{grid-template-columns:1fr 1fr}}
+.col h3{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.6rem}
+ul{margin:0;padding-left:1.1rem}
+li{margin-bottom:.5rem}
+.unknown li::marker{color:var(--seal)}
+
+/* verdict readout */
+.readout{background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.2rem;margin-top:1.4rem}
+.bar{display:flex;align-items:center;gap:.8rem;margin:.7rem 0;font-size:.95rem}
+.bar .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--ink-3);width:5.2rem;flex:none}
+.track{flex:1;height:6px;background:#ddcda9;position:relative;border-radius:3px}
+.pip{position:absolute;top:-4px;width:14px;height:14px;border-radius:50%;background:var(--seal);transform:translateX(-50%);transition:left .5s ease}
+.pip.was{background:transparent;border:2px solid var(--ink-3)}
+.moved{margin-top:1rem;font-size:1.02rem}
+
+/* atticus */
+.atticus{background:var(--card);border:1px solid var(--rule);margin:1.4rem 0 0}
+.at-head{padding:.9rem 1.1rem;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.at-head strong{font-size:1.05rem}
+.log{padding:1.1rem;display:flex;flex-direction:column;gap:.9rem;min-height:70px}
+.msg{font-size:1rem;line-height:1.55}
+.msg.you{align-self:flex-end;background:#e7d9ba;padding:.5rem .8rem;border-radius:2px;max-width:88%}
+.msg.him{border-left:2px solid var(--seal-soft);padding-left:.85rem;color:var(--ink-2);max-width:95%}
+.msg.him .cite{display:block;margin-top:.4rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;padding:0 1.1rem 1.1rem}
+.chip{font-family:var(--serif);font-size:.95rem;background:transparent;border:1px solid var(--rule);padding:.45rem .75rem;border-radius:2px;cursor:pointer;color:var(--ink-2)}
+.chip:hover{background:#f2e8d2;color:var(--ink)}
+.chip[disabled]{opacity:.35;cursor:default}
+
+footer{padding:2.2rem 0 3rem;color:var(--ink-3);font-size:.9rem}
+.note{font-size:.92rem;color:var(--ink-3);margin-top:.8rem}
+
+/* ── provenance marks ──────────────────────────────────────────────────────
+   The three states a quotation can be in, wherever a quotation appears. They
+   are LABELLED as well as coloured: the distinction that matters most here is
+   "we checked this" versus "we did not", and that must survive colour
+   blindness, greyscale printing, and a phone in sunlight. */
+.prov{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.16rem .42rem;border-radius:2px;border:1px solid;white-space:nowrap;margin-right:.5rem}
+.prov.verified{color:#4a6741;border-color:#a8b89e;background:#eef1e6}
+.prov.unverified{color:#6b5a2e;border-color:#c8b592;background:#f4ecd8}
+.prov.unsourced{color:var(--seal);border-color:var(--seal-soft);background:#f6e6e0}
+.provwhere{font-size:.9rem;color:var(--ink-3)}
+.card .prov{margin-top:.7rem;display:inline-block}
+
+details.ctx{margin-top:.7rem;border-top:1px solid var(--rule);padding-top:.6rem}
+details.ctx summary{cursor:pointer;font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+details.ctx summary:hover{color:var(--ink)}
+details.ctx p{font-size:.95rem;color:var(--ink-2);margin:.7rem 0 0}
+details.ctx b{color:var(--ink);background:#efe0be;font-weight:600}
+details.ctx .lnk{font-size:.86rem}
+
+.q-a,.q-b{margin:.7rem 0 0;font-size:1.02rem}
+.q-a{color:var(--ink)}
+.q-b{color:var(--ink-2)}
+.q-ask{margin:1rem 0 0;font-size:1.1rem}
+.takeaway{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--seal);
+  padding:1.1rem 1.2rem;margin:1.4rem 0 0}
+.takeaway h3{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:.5rem}
+.at-body{padding:1.1rem;margin:0;font-size:1rem;color:var(--ink-2)}
+.at-body a{color:var(--seal);text-decoration:none;border-bottom:1px solid var(--seal-soft)}
+.folio a.mark{text-decoration:none}
+.folio a.mark:hover{color:var(--ink)}
+.btn{text-decoration:none;display:inline-block}
+
+/* the entry index */
+.entry{display:block;text-decoration:none;color:inherit;background:var(--card);
+  border:1px solid var(--rule);padding:1.15rem 1.2rem;margin:1rem 0}
+.entry:hover{background:#f2e8d2}
+.entry h2{margin:0 0 .2rem;font-size:1.35rem}
+.entry .sub{margin:0 0 .7rem;font-size:1rem}
+.tallyline{margin:0;font-size:.9rem}
+.tallyline .of{color:var(--ink-3);font-family:var(--mono);font-size:.68rem;letter-spacing:.1em}
+details.ctx .lnk a{color:var(--seal);text-decoration:none;border-bottom:1px solid var(--seal-soft)}
+details.ctx .lnk a:hover{background:#f6e6e0}

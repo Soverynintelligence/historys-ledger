@@ -1,0 +1,21 @@
+# Python / tools
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
+
+# Env / secrets
+.env
+.env.*
+
+# Site / Cloudflare local
+site/.wrangler/
+site/cache/
+site/tmp/
+*.bak-*
+
+# Build intermediates (keep intentional artifacts under design/ and site/)
+dist/*.html
+dist/*.png

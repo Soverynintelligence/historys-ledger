@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>History's Ledger — fol. 1 · The Founding</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#efe4c9;
+  --paper-2:#e7d9ba;
+  --card:#f6eeda;
+  --ink:#2b2419;
+  --ink-2:#5c5140;
+  --ink-3:#8a7d66;
+  --rule:#c8b592;
+  --seal:#8c3a2b;
+  --seal-soft:#a8543f;
+  --serif:"EB Garamond",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:19px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(18px,5vw,32px)}
+.mark{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+/* folio head */
+.folio{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0 14px;border-bottom:1px solid var(--rule)}
+h1{font-size:clamp(2rem,6vw,2.9rem);line-height:1.1;font-weight:600;margin:1.6rem 0 .6rem;letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--seal)}
+h2{font-size:1.5rem;font-weight:600;margin:0 0 .5rem;line-height:1.2}
+h3{font-size:1.1rem;font-weight:600;margin:0 0 .35rem}
+p{margin:0 0 1rem}
+.sub{color:var(--ink-2);font-size:1.05rem}
+
+/* stage machinery */
+.stage{padding:2.4rem 0;border-bottom:1px solid var(--rule)}
+.stage[hidden]{display:none}
+.stagemark{display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem}
+.numeral{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--seal);border:1px solid var(--rule);padding:.2rem .5rem;border-radius:2px}
+
+/* ── the leaf ──────────────────────────────────────────────────────────────
+   A page turn, not a slide. The sheet pivots on its spine at the left edge,
+   so the motion reads as paper rather than as a carousel: the far edge
+   travels further than the near edge, which is the whole tell.
+
+   Two rules kept it from becoming decoration:
+
+   1. It only fires when the reader advances. Nothing turns on load, on
+      scroll, or on its own — the page moves because a hand moved it.
+   2. The turn is never load-bearing. Content is in normal flow before and
+      after; the transform is applied to a wrapper for the duration and then
+      removed. If the animation is refused or fails, the reader still gets
+      every stage, in order, complete.
+   ────────────────────────────────────────────────────────────────────────── */
+.book{perspective:2200px;perspective-origin:0% 40%}
+.leaf{transform-origin:left center}
+/* NO fill mode, and that is the whole safety property.
+   With `both`, the element holds the keyframe's start state — rotated, opacity
+   0 — whenever the animation is not running. In a backgrounded tab CSS
+   animations are frozen AND timers are throttled, so a reader who clicked and
+   switched tabs came back to a page that was invisible and would not recover.
+   With fill `none` the resting style is the normal one: upright and readable.
+   The turn decorates the arrival; it never gates it. */
+.leaf.turning-in{animation:leaf-in .62s cubic-bezier(.22,.72,.28,1)}
+
+@keyframes leaf-in{
+  from{transform:rotateY(78deg);opacity:0}
+  60%{opacity:1}
+  to{transform:rotateY(0deg);opacity:1}
+}
+/* ONLY the arriving sheet turns.
+   An earlier version also turned the outgoing page away to opacity 0 — but
+   this is one scrolling column, not a spread, so the page you just read has
+   nowhere to go. It animated out and then snapped back into view the moment
+   the class came off, which reads as a glitch rather than as paper. In a book
+   the leaf you finish stays on the stack under the next one; here it stays
+   above, exactly where you left it, and the new sheet drops onto it. */
+
+/* The gutter shadow the spine casts on the sheet beneath. This is what sells
+   the depth — the rotation alone reads as a flat card flipping. It fades as
+   the sheet comes down flat. */
+.leaf.turning-in::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(90deg,rgba(80,62,34,.22),rgba(80,62,34,.06) 32%,transparent 60%);
+  animation:gutter .62s ease-out;
+}
+@keyframes gutter{ from{opacity:1} to{opacity:0} }
+.stage{position:relative}
+
+/* A reader who has asked for less motion gets the content and none of the
+   theatre — not a slower turn, no turn. */
+@media(prefers-reduced-motion:reduce){
+  .leaf.turning-in{animation:none}
+  .leaf.turning-in::before{display:none}
+}
+
+/* the weighing control */
+.scale{margin:1.6rem 0 0;background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.2rem}
+.scale legend{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:0}
+.opts{display:grid;gap:.5rem;margin-top:1rem}
+.opt{
+  display:flex;gap:.75rem;align-items:flex-start;padding:.7rem .85rem;
+  background:transparent;border:1px solid var(--rule);border-radius:2px;
+  font-family:var(--serif);font-size:1rem;color:var(--ink);text-align:left;cursor:pointer;width:100%;
+}
+.opt:hover{background:#f2e8d2}
+.opt[aria-pressed="true"]{border-color:var(--seal);background:#f4e7d4;box-shadow:inset 3px 0 0 var(--seal)}
+.opt .k{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);padding-top:.25rem;flex:none}
+
+/* buttons */
+.btn{
+  font-family:var(--serif);font-size:1rem;background:var(--ink);color:var(--paper);
+  border:1px solid var(--ink);padding:.6rem 1.15rem;border-radius:2px;cursor:pointer;
+}
+.btn:hover{background:#3b3223}
+.btn.quiet{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.quiet:hover{background:#f2e8d2}
+.btn[disabled]{opacity:.4;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem;align-items:center}
+:focus-visible{outline:2px solid var(--seal);outline-offset:3px}
+
+/* evidence cards */
+.card{background:var(--card);border:1px solid var(--rule);padding:1.15rem 1.15rem;margin:1rem 0}
+.card .src{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--ink-3);margin-top:.7rem;display:block}
+blockquote{margin:0 0 .2rem;font-size:1.12rem;line-height:1.5;font-style:italic}
+.gloss{font-size:.98rem;color:var(--ink-2);margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--rule)}
+.two{display:grid;gap:1rem}
+@media(min-width:720px){.two{grid-template-columns:1fr 1fr}}
+.col h3{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.6rem}
+ul{margin:0;padding-left:1.1rem}
+li{margin-bottom:.5rem}
+.unknown li::marker{color:var(--seal)}
+
+/* verdict readout */
+.readout{background:var(--card);border:1px solid var(--rule);padding:1.3rem 1.2rem;margin-top:1.4rem}
+.bar{display:flex;align-items:center;gap:.8rem;margin:.7rem 0;font-size:.95rem}
+.bar .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;color:var(--ink-3);width:5.2rem;flex:none}
+.track{flex:1;height:6px;background:#ddcda9;position:relative;border-radius:3px}
+.pip{position:absolute;top:-4px;width:14px;height:14px;border-radius:50%;background:var(--seal);transform:translateX(-50%);transition:left .5s ease}
+.pip.was{background:transparent;border:2px solid var(--ink-3)}
+.moved{margin-top:1rem;font-size:1.02rem}
+
+/* atticus */
+.atticus{background:var(--card);border:1px solid var(--rule);margin:1.4rem 0 0}
+.at-head{padding:.9rem 1.1rem;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.at-head strong{font-size:1.05rem}
+.log{padding:1.1rem;display:flex;flex-direction:column;gap:.9rem;min-height:70px}
+.msg{font-size:1rem;line-height:1.55}
+.msg.you{align-self:flex-end;background:#e7d9ba;padding:.5rem .8rem;border-radius:2px;max-width:88%}
+.msg.him{border-left:2px solid var(--seal-soft);padding-left:.85rem;color:var(--ink-2);max-width:95%}
+.msg.him .cite{display:block;margin-top:.4rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--ink-3)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;padding:0 1.1rem 1.1rem}
+.chip{font-family:var(--serif);font-size:.95rem;background:transparent;border:1px solid var(--rule);padding:.45rem .75rem;border-radius:2px;cursor:pointer;color:var(--ink-2)}
+.chip:hover{background:#f2e8d2;color:var(--ink)}
+.chip[disabled]{opacity:.35;cursor:default}
+
+footer{padding:2.2rem 0 3rem;color:var(--ink-3);font-size:.9rem}
+.note{font-size:.92rem;color:var(--ink-3);margin-top:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap book">
+
+  <div class="folio">
+    <span class="mark">History's Ledger</span>
+    <span class="mark" id="foliomark">fol. 1 · recto</span>
+  </div>
+
+  <!-- STAGE 0 -->
+  <section class="stage leaf" id="s0">
+    <h1>The Founding <em>1763–1789</em></h1>
+    <p class="sub">Before you read the record, say where you stand. You'll be asked again at the end, and shown whether you moved.</p>
+
+    <fieldset class="scale" style="border:1px solid var(--rule);margin-top:1.8rem">
+      <legend>The question</legend>
+      <p style="margin:.8rem 0 0;font-size:1.1rem">A government was founded on the written principle that all men are created equal, by men who held people in bondage and wrote protections for that bondage into the structure of the state. How should the two be weighed?</p>
+      <div class="opts" id="opts0"></div>
+    </fieldset>
+
+    <div class="row">
+      <button class="btn" id="go0" disabled>Commit and read the record →</button>
+      <span class="mark" id="hint0">Choose one to continue</span>
+    </div>
+  </section>
+
+  <!-- STAGE 1 -->
+  <section class="stage leaf" id="s1" hidden>
+    <div class="stagemark"><span class="numeral">I</span><span class="mark">Established facts</span></div>
+    <h2>What the evidence strongly supports.</h2>
+    <div class="two">
+      <div class="col">
+        <h3>What was achieved</h3>
+        <ul>
+          <li>A written claim that authority derives from the consent of the governed, adopted 4 July 1776.</li>
+          <li>A government structured to limit itself, ratified 1788.</li>
+          <li>Power handed from one faction to a rival without a sword, 1801.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>What it cost</h3>
+        <ul>
+          <li>Slavery was protected in the structure of the state: representation counted enslaved people at three-fifths; the slave trade was shielded from prohibition until 1808; escaped people were to be returned.</li>
+          <li>The 1790 census counted 697,681 enslaved people. Estimates for 1776 run nearer 450,000–500,000.</li>
+          <li>Jefferson, who wrote the words, held people in bondage while writing them.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Both columns are drawn from the same documents. Neither is our characterisation.</p>
+    <div class="row"><button class="btn" data-next="s2">Read the sources →</button></div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="stage leaf" id="s2" hidden>
+    <div class="stagemark"><span class="numeral">II</span><span class="mark">Primary sources</span></div>
+    <h2>The words, laws and letters from the time.</h2>
+
+    <div class="card">
+      <blockquote>“We hold these truths to be self-evident, that all men are created equal…”</blockquote>
+      <span class="src">Declaration of Independence, 4 July 1776</span>
+      <div class="gloss">Every government on earth in 1776 justified itself by blood, conquest, or God's appointment of a king. The men in Philadelphia wrote down a different reason.</div>
+    </div>
+
+    <div class="card">
+      <blockquote>“He has waged cruel war against human nature itself, violating its most sacred rights of life &amp; liberty in the persons of a distant people who never offended him…”</blockquote>
+      <span class="src">Jefferson's draft of the Declaration — struck by Congress before signing</span>
+      <div class="gloss">Jefferson later recorded why it came out: South Carolina and Georgia objected, and northern merchants who had carried the trade were sensitive on the point.</div>
+    </div>
+
+    <div class="card">
+      <blockquote>“…they have in common with all other men a natural and unalienable right to that freedom which the great Parent of the Universe hath bestowed equally on all mankind…”</blockquote>
+      <span class="src">Petition of enslaved men to the Massachusetts legislature, 1777</span>
+      <div class="gloss">The contradiction was named at the time, out loud, by the people it excluded — using the founders' own language, within a year of the Declaration.</div>
+    </div>
+
+    <div class="row"><button class="btn" data-next="s3">Where the record disagrees →</button></div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="stage leaf" id="s3" hidden>
+    <div class="stagemark"><span class="numeral">III</span><span class="mark">Conflicting accounts</span></div>
+    <h2>Where the record disagrees with itself.</h2>
+    <div class="two">
+      <div class="card">
+        <blockquote>“How is it that we hear the loudest yelps for liberty among the drivers of negroes?”</blockquote>
+        <span class="src">Samuel Johnson, <i>Taxation No Tyranny</i>, 1775</span>
+        <div class="gloss">Written by a critic of the American cause, from within the empire the colonists were leaving — the charge of hypocrisy is contemporary, not retrospective.</div>
+      </div>
+      <div class="card">
+        <blockquote>“I tremble for my country when I reflect that God is just…”</blockquote>
+        <span class="src">Jefferson, <i>Notes on the State of Virginia</i>, 1785</span>
+        <div class="gloss">The same man who did not free the people he held wrote down that the arrangement was indefensible. Both facts are in the record; neither cancels the other.</div>
+      </div>
+    </div>
+    <p class="note">The record does not speak with one voice. This is the part a textbook usually removes.</p>
+    <div class="row"><button class="btn" data-next="s4">What we don't know →</button></div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="stage leaf" id="s4" hidden>
+    <div class="stagemark"><span class="numeral">IV</span><span class="mark">What remains unknown</span></div>
+    <h2>The limits of the record, said plainly.</h2>
+    <ul class="unknown">
+      <li>No full record survives of the debate in which the slave-trade passage was struck. Jefferson's account is the main source, written decades later, by an interested party.</li>
+      <li>Enslaved population figures before the 1790 census are estimates, not counts. Ranges differ by tens of thousands.</li>
+      <li>What the delegates privately believed cannot be recovered. Their votes and their words survive; their minds do not.</li>
+    </ul>
+    <p class="note">Where the record stops, we stop. That is the fourth column of every entry.</p>
+    <div class="row"><button class="btn" data-next="s5">Weigh it again →</button></div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="stage leaf" id="s5" hidden>
+    <div class="stagemark"><span class="numeral">V</span><span class="mark">Your ledger</span></div>
+    <h2>Same question. Now with the record behind you.</h2>
+    <fieldset class="scale" style="border:1px solid var(--rule)">
+      <legend>The question, again</legend>
+      <p style="margin:.8rem 0 0;font-size:1.1rem">How should the two be weighed?</p>
+      <div class="opts" id="opts1"></div>
+    </fieldset>
+
+    <div class="readout" id="readout" hidden>
+      <div class="bar"><span class="tag">Before</span><div class="track"><div class="pip was" id="pipA"></div></div></div>
+      <div class="bar"><span class="tag">After</span><div class="track"><div class="pip" id="pipB"></div></div></div>
+      <p class="moved" id="moved"></p>
+      <p class="note">There is no correct answer here and nothing is scored. The ledger counts both sides; the weighing is yours.</p>
+    </div>
+
+    <div class="atticus">
+      <div class="at-head"><strong>Ask Atticus</strong><span class="mark">Always cites · or says he can't</span></div>
+      <div class="log" id="log">
+        <div class="msg him" id="empty">I answer from this entry and the sources behind it. If I can't point to it, I'll say so and stop.</div>
+      </div>
+      <div class="chips" id="chips">
+        <button class="chip"
+          data-a="Congress struck a passage from Jefferson's draft that blamed the King for the slave trade. Jefferson's own account gives the reason: South Carolina and Georgia objected, and northern merchants who had carried the trade were sensitive to it."
+          data-c="Source · Jefferson's draft; Jefferson's later account of the deletion">What did Congress cut from the Declaration?</button>
+        <button class="chip"
+          data-a="The record disagrees, and I'd rather show you the disagreement than resolve it. Samuel Johnson called it hypocrisy in 1775, in print. Jefferson wrote in 1785 that he trembled for his country because God is just — and did not free the people he held. Both are in the entry. Which weighs more is not mine to tell you."
+          data-c="Source · Johnson, Taxation No Tyranny, 1775; Jefferson, Notes on the State of Virginia, 1785">Were the founders hypocrites?</button>
+        <button class="chip"
+          data-a="I can't give you a figure for 1776. There was no census before 1790, and the pre-census numbers are estimates that differ by tens of thousands. The 1790 count was 697,681. I won't hand you a 1776 number as though it were counted."
+          data-c="Limit of the record · stated in section IV of this entry">How many people were enslaved in 1776?</button>
+      </div>
+    </div>
+
+    <div class="row"><button class="btn quiet" id="restart">Start over</button></div>
+  </section>
+
+  <footer>
+    Truth on record · Provenance matters · Context clarifies
+  </footer>
+</div>
+
+<script>
+(function(){
+  var LABELS=[
+    ["A","The achievement outweighs the cost."],
+    ["B","The achievement is greater, but the cost is not incidental to it."],
+    ["C","They cannot be weighed against each other. Both stand."],
+    ["D","The cost is greater, but the principle mattered."],
+    ["E","The cost outweighs the achievement."]
+  ];
+  var before=null, after=null;
+
+  function build(host, onPick){
+    LABELS.forEach(function(l,i){
+      var b=document.createElement('button');
+      b.className='opt';b.type='button';b.setAttribute('aria-pressed','false');
+      b.innerHTML='<span class="k">'+l[0]+'</span><span>'+l[1]+'</span>';
+      b.addEventListener('click',function(){
+        Array.prototype.forEach.call(host.children,function(c){c.setAttribute('aria-pressed','false');});
+        b.setAttribute('aria-pressed','true');
+        onPick(i);
+      });
+      host.appendChild(b);
+    });
+  }
+
+  build(document.getElementById('opts0'),function(i){
+    before=i;
+    document.getElementById('go0').disabled=false;
+    document.getElementById('hint0').textContent='Nothing is scored';
+  });
+
+  build(document.getElementById('opts1'),function(i){
+    after=i;
+    var r=document.getElementById('readout');r.hidden=false;
+    document.getElementById('pipA').style.left=(before/4*100)+'%';
+    document.getElementById('pipB').style.left=(after/4*100)+'%';
+    var d=after-before, m=document.getElementById('moved');
+    if(d===0){m.textContent='You landed where you started. The record didn’t move you — which is a result, not a failure.';}
+    else{
+      m.textContent='You moved '+Math.abs(d)+' '+(Math.abs(d)===1?'step':'steps')+' toward '+(d>0?'the cost':'the achievement')+'. The documents did that, not us.';
+    }
+    r.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+
+  /* ── turning the page ────────────────────────────────────────────────────
+     The sheet the reader is leaving lifts off its spine; the one arriving
+     settles onto it. Everything here degrades to the old behaviour: if the
+     reader has asked for reduced motion, or the browser gives us no
+     animation events, the next stage is simply shown.
+     ──────────────────────────────────────────────────────────────────────── */
+  var quiet = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var leaves = 1;   /* folios turned so far — drives the recto/verso mark */
+
+  function foliate(){
+    var el = document.getElementById('foliomark');
+    if(!el) return;
+    var n = Math.floor(leaves/2) + 1;
+    el.textContent = 'fol. ' + n + ' · ' + (leaves % 2 ? 'verso' : 'recto');
+  }
+
+
+  function reveal(next){
+    next.hidden = false;
+    leaves++; foliate();
+    /* Instant, not smooth. A smooth scroll and a page turn are two motions
+       competing to mean the same thing, and the turn loses — it plays while
+       the viewport is still travelling. Land the reader on the sheet and let
+       the turn be the motion that says a page arrived. */
+    next.scrollIntoView({behavior:'auto', block:'start'});
+  }
+
+  function turn(toId){
+    var next = document.getElementById(toId);
+    if(!next) return;
+    reveal(next);
+
+    /* No turn when the tab is not being looked at. A CSS animation attached to
+       a hidden document does not simply wait — it STARTS and then freezes at
+       frame zero, pinning the from-state (rotated, opacity 0) for as long as
+       the tab stays in the background. fill-mode does not help: that governs
+       before-start and after-end, and a frozen animation is neither. The
+       reader would return to an invisible page. */
+    if(quiet || document.hidden) return;
+
+    /* Applied in the same tick as unhiding, so there is no frame where the
+       sheet is visible and flat before it turns. Nothing waits on rAF or on a
+       timer any more: both were unavailable in the case that mattered. The
+       class is tidied up when the animation ends, and if that event never
+       arrives the only consequence is a stale class on an element that is
+       already upright and readable. */
+    next.classList.add('turning-in');
+    next.addEventListener('animationend', function h(){
+      next.removeEventListener('animationend', h);
+      next.classList.remove('turning-in');
+    });
+  }
+
+  document.getElementById('go0').addEventListener('click',function(){
+    turn('s1');
+  });
+  document.querySelectorAll('[data-next]').forEach(function(b){
+    b.addEventListener('click',function(){
+      turn(b.dataset.next);
+    });
+  });
+
+  var log=document.getElementById('log'), empty=document.getElementById('empty');
+  document.getElementById('chips').addEventListener('click',function(e){
+    var c=e.target.closest('.chip'); if(!c||c.disabled) return;
+    if(empty&&empty.parentNode) empty.remove();
+    var q=document.createElement('div');q.className='msg you';q.textContent=c.textContent;log.appendChild(q);
+    var a=document.createElement('div');a.className='msg him';
+    a.textContent=c.dataset.a;
+    var s=document.createElement('span');s.className='cite';s.textContent=c.dataset.c;a.appendChild(s);
+    log.appendChild(a);
+    c.disabled=true;
+  });
+
+  /* And if the tab is hidden PART WAY through a turn, the animation freezes
+     wherever it got to — mid-rotation, part-transparent. Strip it, and the
+     element falls back to its resting style: upright and readable. */
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden) return;
+    document.querySelectorAll('.leaf.turning-in')
+      .forEach(function(el){ el.classList.remove('turning-in'); });
+  });
+
+  document.getElementById('restart').addEventListener('click',function(){
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>
