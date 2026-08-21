@@ -32,7 +32,7 @@ from tools.source_records import load_all
 ROOT = Path(__file__).resolve().parent.parent
 CHAPTERS = ROOT / "content" / "chapters"
 SOURCES = ROOT / "content" / "sources"
-DEFAULT_OUT = Path.home() / "historysledger-site" / "read"
+DEFAULT_OUT = ROOT / "site" / "read"
 
 SCALE = [
     ("A", "The achievement outweighs the cost."),
@@ -273,7 +273,7 @@ def shell_head(title: str, description: str, *, depth: str = "../") -> str:
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{depth}app.css">
+<link rel="stylesheet" href="{depth}app.css?v=20260821clean">
 </head>
 <body>
 <div class="app-shell">
@@ -294,6 +294,7 @@ def shell_bar(active: str, *, depth: str = "../") -> str:
       </a>
       <nav class="app-nav" aria-label="Primary">
         {link("read/", "Entries", "entries")}
+        {link("family.html", "Family", "family")}
         <a href="#ask" data-open-atticus>Ask Atticus</a>
       </nav>
     </div>
@@ -307,7 +308,7 @@ def shell_foot(*, depth: str = "../") -> str:
     <span>Powered by <a href="https://soverynintelligence.com">Soveryn</a></span>
   </footer>
 </div>
-<script src="{depth}app.js"></script>
+<script src="{depth}app.js?v=20260821clean"></script>
 </body>
 </html>
 """
@@ -725,14 +726,19 @@ def _build_collection(
     *,
     collection_title: str | None = None,
     depth: str = "../",
+    allowed_stems: set[str] | None = None,
 ) -> tuple[list[dict], dict]:
     records = load_all(str(sources_dir)) if sources_dir.is_dir() else []
     entries = apparatus(str(chapters_dir), str(sources_dir))
+    if allowed_stems is not None:
+        entries = [e for e in entries if e["chapter"] in allowed_stems]
     by_chapter: dict[str, list[dict]] = {}
     for e in entries:
         by_chapter.setdefault(e["chapter"], []).append(e)
 
     paths = sorted(chapters_dir.glob("*.md"))
+    if allowed_stems is not None:
+        paths = [p for p in paths if p.stem in allowed_stems]
     chapters = [parse_chapter(p) for p in paths]
     out.mkdir(parents=True, exist_ok=True)
 
@@ -769,6 +775,14 @@ def _build_collection(
             f"cards={len(cards)}"
         )
 
+    written = {ch["stem"] for ch in chapters}
+    for leftover in out.glob("*.html"):
+        if leftover.name == "index.html":
+            continue
+        if leftover.stem not in written:
+            leftover.unlink()
+            print(f"  unpublished {leftover.name}")
+
     idx = index_page(chapters, by_chapter)
     if collection_title:
         idx = idx.replace(
@@ -786,12 +800,22 @@ def _build_collection(
 
 def main(argv=None) -> int:
     from tools.content_roots import roots
+    from tools.open_shelf import entries as shelf_entries
 
     out = Path((argv or sys.argv[1:] or [str(DEFAULT_OUT)])[0])
     out.mkdir(parents=True, exist_ok=True)
 
-    # Legacy US tree at /read/
-    _build_collection(out, CHAPTERS, SOURCES)
+    open_by_collection: dict[str, set[str]] = {}
+    for e in shelf_entries():
+        open_by_collection.setdefault(e["collection_id"], set()).add(e["stem"])
+
+    # Legacy US tree at /read/ — only the open-shelf entries
+    _build_collection(
+        out,
+        CHAPTERS,
+        SOURCES,
+        allowed_stems=open_by_collection.get("us-america", set()),
+    )
 
     # Additional open collections under /read/{id}/
     for r in roots():
@@ -801,12 +825,14 @@ def main(argv=None) -> int:
         dest = out / sub
         depth = "../../"
         print(f"-- collection {r['id']} → {dest}")
+        allowed = open_by_collection.get(r["id"])
         _build_collection(
             dest,
             Path(r["chapters_dir"]),
             Path(r["sources_dir"]),
             collection_title=r.get("title"),
             depth=depth,
+            allowed_stems=allowed,
         )
 
     return 0

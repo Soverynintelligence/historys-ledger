@@ -1,0 +1,6 @@
+id: us-america
+title: United States
+status: open
+# Chapter 07 (The Bullet and the Podium) stays on disk until its seven
+# long quotations sit in held source records. It is not on the open shelf.
+open_entries: [01-the-founding, 02-slavery-and-emancipation, 03-reconstruction, 04-standard-oil, 05-civil-rights, 06-cold-war]

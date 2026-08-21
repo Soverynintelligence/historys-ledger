@@ -15,13 +15,16 @@ def roots() -> list[dict]:
     legacy_ch = CONTENT / "chapters"
     legacy_src = CONTENT / "sources"
     if legacy_ch.is_dir() and legacy_src.is_dir():
+        meta = _read_yaml_lite(CONTENT / "collection.yaml")
         out.append({
-            "id": "us-america",
-            "title": "United States",
-            "status": "open",
+            "id": meta.get("id") or "us-america",
+            "title": meta.get("title") or "United States",
+            "status": meta.get("status") or "open",
             "chapters_dir": str(legacy_ch),
             "sources_dir": str(legacy_src),
             "site_subdir": "",  # /read/
+            "blurb": meta.get("blurb") or "",
+            "open_entries": meta.get("open_entries") or [],
         })
     if COLLECTIONS.is_dir():
         for d in sorted(COLLECTIONS.iterdir()):

@@ -1,6 +1,6 @@
 /* History's Ledger — cache the ledger for offline reading.
    Atticus and the Family waitlist stay on the network. */
-var CACHE = "hl-ledger-v1";
+var CACHE = "hl-ledger-v2";
 
 var PRECACHE = [
   "/",
@@ -24,7 +24,6 @@ var PRECACHE = [
   "/read/04-standard-oil.html",
   "/read/05-civil-rights.html",
   "/read/06-cold-war.html",
-  "/read/07-the-bullet-and-the-podium.html",
   "/read/modern-wars/",
   "/read/modern-wars/01-how-europe-walked-in.html",
   "/read/modern-wars/01-world-war-ii.html"
