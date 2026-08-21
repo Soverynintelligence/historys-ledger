@@ -100,3 +100,5 @@ Whether the bombs were necessary to end the war — versus invasion, blockade, S
 ---
 
 **Further Reading — Primary Sources:** FDR war message (1941) · Atlantic Charter (1941) · Executive Order 9066 (1942) · *Korematsu v. United States* (1944) · Allied declaration on the defeat of Germany (1945) · Truman Hiroshima statement (1945) · Japanese Instrument of Surrender (1945).
+
+**Next:** Korea and Vietnam — planned, not yet open. 1914 (How Europe walked in) is open.
