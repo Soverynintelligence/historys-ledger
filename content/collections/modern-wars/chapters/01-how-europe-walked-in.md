@@ -65,10 +65,10 @@ Belgium had a treaty of neutrality, guaranteed by the Powers, including Prussia.
 
 And:
 
-> *"In this event, Germany can undertake no obligations towards Belgium, but the eventual adjustment of the relations between the two States must be left to the decision of arms."*
+> *"In this event, Germany can undertake no obligations towards Belgium"*
 > — **same note**, fourth declaration
 
-A twelve-hour limit was allowed. Belgium answered at 7 a.m. on 3 August:
+The held text then leaves the rest to the decision of arms. A twelve-hour limit was allowed. Belgium answered at 7 a.m. on 3 August:
 
 > *"The Belgian Government, if they were to accept the proposals submitted to them, would sacrifice the honour of the nation and betray their duty towards Europe."*
 > — **Belgian reply**, 3 August 1914 (Grey Book No. 22)

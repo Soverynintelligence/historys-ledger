@@ -40,6 +40,8 @@ def roots() -> list[dict]:
                 "sources_dir": str(src),
                 "site_subdir": meta.get("id") or d.name,
                 "blurb": meta.get("blurb") or "",
+                "eras": meta.get("eras") or [],
+                "open_entries": meta.get("open_entries") or [],
             })
     return out
 
