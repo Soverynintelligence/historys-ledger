@@ -690,3 +690,10 @@
   }
   wireWaitlist();
 })();
+
+/* PWA — register once. Atticus + waitlist stay on the network. */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("/sw.js").catch(function () {});
+  });
+}
