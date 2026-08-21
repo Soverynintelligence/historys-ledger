@@ -16,3 +16,5 @@ def test_check_script_runs_the_test_suite_and_the_gate():
     assert "pytest" in body
     assert "provenance_gate" in body
     assert "build_folios" in body
+    assert "stale_open" in body
+    assert "open_shelf" in body

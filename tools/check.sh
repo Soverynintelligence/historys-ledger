@@ -14,8 +14,10 @@ python3 tools/provenance_gate.py
 echo
 echo "== corpus drift =="
 python3 - <<'EOF'
-from tools.generate_corpus import CHAPTERS, CORPUS, stale
-drift = stale(CHAPTERS, CORPUS)
+from tools.generate_corpus import CORPUS, stale_open
+from tools.open_shelf import stems
+drift = stale_open(CORPUS)
+print("open shelf:", ", ".join(sorted(stems())))
 print("corpus is current" if not drift else "STALE: " + ", ".join(drift))
 EOF
 
