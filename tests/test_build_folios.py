@@ -1,7 +1,7 @@
 """The folio generator must not invent prose, and must emit the app shell."""
 from pathlib import Path
 
-from tools.build_folios import parse_chapter, render, chapter_to_html
+from tools.build_folios import parse_chapter, render, chapter_to_html, main as build_main
 
 
 def test_parse_chapter_reads_title_and_ledger_blocks(tmp_path):
@@ -104,3 +104,21 @@ def test_chapter_to_html_makes_callouts_and_quotes_tappable():
     )
     assert 'data-open-card="decl-1776"' in html
     assert "tap-callout" in html or "tap-quote" in html
+
+
+def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
+    build_main([str(tmp_path)])
+    assert not (tmp_path / "07-the-bullet-and-the-podium.html").exists()
+    idx = (tmp_path / "index.html").read_text(encoding="utf-8")
+    assert "The Bullet and the Podium" not in idx
+    assert "07-the-bullet-and-the-podium" not in idx
+    assert "Across all 6 entries" in idx
+    assert "7 unverified" not in idx
+    wars = (tmp_path / "modern-wars" / "index.html").read_text(encoding="utf-8")
+    assert "Victory and the Bill" in wars
+    assert "American papers, not the war" in wars
+    assert "How Europe walked in" in wars
+    wwii = (tmp_path / "modern-wars" / "01-world-war-ii.html").read_text(encoding="utf-8")
+    assert "1939–1945" not in wwii
+    assert "Holocaust" in wwii
+    assert "does not hold papers on the Holocaust" in wwii or "does not cover the fighting or the Holocaust" in wwii

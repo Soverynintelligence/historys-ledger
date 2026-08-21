@@ -33,12 +33,16 @@ def generate(chapters_dir: str, out_dir: str) -> list[str]:
 
 
 def generate_open(out_dir: str) -> list[str]:
-    """Copy every open-shelf chapter, then write the shelf inventory."""
+    """Copy every open-shelf chapter, drop unpublished leftovers, write the inventory."""
     from tools.open_shelf import entries, render, stems
 
     os.makedirs(out_dir, exist_ok=True)
-    written: list[str] = []
     allowed = stems()
+    allowed_names = {stem + ".md" for stem in allowed}
+    for name in os.listdir(out_dir):
+        if name.endswith(".md") and name != "OPEN-SHELF.md" and name not in allowed_names:
+            os.remove(os.path.join(out_dir, name))
+    written: list[str] = []
     for e in entries():
         if e["stem"] not in allowed:
             continue
@@ -85,6 +89,11 @@ def stale_open(out_dir: str) -> list[str]:
     shelf = os.path.join(out_dir, "OPEN-SHELF.md")
     if not os.path.exists(shelf) or open(shelf, encoding="utf-8").read() != render():
         out.append("OPEN-SHELF.md")
+    allowed_names = {e["stem"] + ".md" for e in entries()} | {"OPEN-SHELF.md"}
+    if os.path.isdir(out_dir):
+        for name in os.listdir(out_dir):
+            if name.endswith(".md") and name not in allowed_names:
+                out.append(name)
     return out
 
 

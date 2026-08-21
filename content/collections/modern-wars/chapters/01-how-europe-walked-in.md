@@ -113,4 +113,4 @@ These papers do not give the dead. They give the bargain: a clock, a refused inq
 ---
 
 **Further Reading — Primary Sources:** Austro-Hungarian ultimatum to Serbia (23 July 1914) · Serbian reply (25 July 1914) · Austro-Hungarian declaration of war on Serbia (28 July 1914) · German declaration of war on Russia (1 August 1914) · German note to Belgium and Belgian reply (Grey Book Nos. 20, 22) · Grey, Commons, 3 August 1914 · German declaration of war on France (Yellow Book No. 147) · Bethmann Hollweg as reported in Grey Book No. 35.
-**Next Chapter:** World War II — Victory and the Bill (1939–1945).
+**Next Chapter:** Victory and the Bill — American papers, not the war.
