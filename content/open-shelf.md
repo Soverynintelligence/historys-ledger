@@ -13,7 +13,7 @@ He refuses everything else. Silence is the product working.
 - 06-cold-war — The Cold War — The Long Standoff
 
 ## Modern Wars — open
-- 01-how-europe-walked-in — How Europe walked in (1914)
+- 01-how-europe-walked-in — How Europe walked in (1914 · complete July crisis week)
 - 01-world-war-ii — Victory and the Bill — American papers, not the war
 
 ## Named, not open

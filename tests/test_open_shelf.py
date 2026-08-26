@@ -30,6 +30,7 @@ def test_open_shelf_includes_1914_how_europe_walked_in():
     assert "01-how-europe-walked-in" in inventory
     assert "1914" in inventory
     assert "How Europe walked in" in inventory
+    assert "July crisis week" in inventory
 
 
 def test_open_us_shelf_is_the_six_held_entries_not_bullet():
