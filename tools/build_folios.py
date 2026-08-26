@@ -292,6 +292,7 @@ def shell_bar(active: str, *, depth: str = "../") -> str:
         cur = ' aria-current="page"' if active == key else ""
         return f'<a href="{depth}{href}"{cur}>{label}</a>'
 
+    family_cur = ' aria-current="page"' if active == "family" else ""
     mark = f"{depth}brand/hl-seal-red-256.png?v=20260814paper"
     return f"""  <header class="app-bar">
     <div class="app-bar-inner">
@@ -301,7 +302,7 @@ def shell_bar(active: str, *, depth: str = "../") -> str:
       </a>
       <nav class="app-nav" aria-label="Primary">
         {link("read/", "Entries", "entries")}
-        {link("family.html", "Family", "family")}
+        <a href="/family"{family_cur}>Family</a>
         <a href="#ask" data-open-atticus>Ask Atticus</a>
       </nav>
     </div>

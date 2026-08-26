@@ -76,6 +76,8 @@ def test_render_is_tabbed_app_shell_not_wizard_gate():
     assert "See it where it is written" in page
     assert "app-shell" in page
     assert "app.css" in page
+    assert 'href="/family"' in page
+    assert "family.html" not in page
     assert "source-drawer" in page
     assert "source-cards-data" in page
     # not a hard gate before the record
@@ -131,3 +133,9 @@ def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
     assert "1939–1945" not in wwii
     assert "Holocaust" in wwii
     assert "does not hold papers on the Holocaust" in wwii or "does not cover the fighting or the Holocaust" in wwii
+    assert 'href="/family"' in idx
+    assert "../family.html" not in idx
+    assert 'href="/family"' in wars
+    assert "family.html" not in wars
+    assert 'href="/family"' in wwii
+    assert "family.html" not in wwii
