@@ -69,8 +69,12 @@ def render() -> str:
             current = e["collection"]
             lines.append(f"## {current} — open")
         extra = ""
-        if e["stem"] == "01-how-europe-walked-in" and "1914" not in e["title"]:
-            extra = " (1914)"
+        if e["stem"] == "01-how-europe-walked-in":
+            extra = (
+                " (1914 · complete July crisis week)"
+                if "1914" not in e["title"]
+                else " — complete July crisis week"
+            )
         lines.append(f"- {e['stem']} — {e['title']}{extra}")
     lines.append("")
     lines.append("## Named, not open")

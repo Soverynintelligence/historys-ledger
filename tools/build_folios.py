@@ -49,6 +49,11 @@ STATE_WORD = {
 }
 
 _QUOTE = re.compile(r"^> \*[\"“](.+?)[\"”]\*\s*$(?:\n^> — (.+?)$)?", re.M)
+ASSET_V = "20260826week"
+
+
+def _heading_id(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 
 def parse_chapter(path: Path) -> dict:
@@ -213,7 +218,9 @@ def chapter_to_html(
         line = lines[i]
         if line.startswith("## "):
             flush_p()
-            out.append(f"<h2>{_md(line[3:].strip())}</h2>")
+            heading = line[3:].strip()
+            hid = html.escape(_heading_id(heading), quote=True)
+            out.append(f'<h2 id="{hid}">{_md(heading)}</h2>')
         elif line.startswith("---"):
             flush_p()
             out.append("<hr>")
@@ -273,7 +280,7 @@ def shell_head(title: str, description: str, *, depth: str = "../") -> str:
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{depth}app.css?v=20260821clean">
+<link rel="stylesheet" href="{depth}app.css?v={ASSET_V}">
 </head>
 <body>
 <div class="app-shell">
@@ -308,7 +315,7 @@ def shell_foot(*, depth: str = "../") -> str:
     <span>Powered by <a href="https://soverynintelligence.com">Soveryn</a></span>
   </footer>
 </div>
-<script src="{depth}app.js?v=20260821clean"></script>
+<script src="{depth}app.js?v={ASSET_V}"></script>
 </body>
 </html>
 """
@@ -469,6 +476,7 @@ def render(
     cards: dict[str, dict] | None = None,
     callout_to: dict[str, str] | None = None,
     span_to: dict[str, str] | None = None,
+    week_html: str = "",
 ) -> str:
     c = counts(entries)
     total = sum(c.values()) or 0
@@ -566,12 +574,16 @@ def render(
              sizes="84px">
       </div>
       <h1>{_md(ch["name"])} <em>{_md(ch["subtitle"])}</em></h1>
-      <p class="sub">Open any tab. In Read, tap a primary source or a long quotation to open its card. Atticus floats bottom-right — ask him anything on the record.</p>
+      <p class="sub">{
+        "A complete 1914 set — July crisis week on this page. Open any tab. Tap a held card. Weigh stays optional."
+        if week_html
+        else "Open any tab. In Read, tap a primary source or a long quotation to open its card. Atticus floats bottom-right — ask him anything on the record."
+      }</p>
       {tally}
       <div class="progress-rail" data-progress-rail aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
-
+{week_html if week_html else '''
       <div class="challenge-bar">
         <h3>Don&rsquo;t just scroll — interrogate it</h3>
         <p>History is boring when it lectures. Ask Atticus to stress-test this entry, or open the Sources tab and pull a document.</p>
@@ -582,6 +594,7 @@ def render(
           <button type="button" class="btn quiet" data-open-atticus>Ask Atticus →</button>
         </div>
       </div>
+'''}
 
       <div class="entry-tabs" role="tablist" aria-label="Entry sections">
         <button class="tab" role="tab" id="tab-established" aria-controls="panel-established" aria-selected="true"><span class="n">I</span>Established</button>
@@ -665,16 +678,27 @@ def render(
     )
 
 
-def index_page(chapters: list[dict], by_chapter: dict) -> str:
+def index_page(
+    chapters: list[dict],
+    by_chapter: dict,
+    *,
+    collection_note: str = "",
+    entry_notes: dict[str, str] | None = None,
+) -> str:
+    notes = entry_notes or {}
     rows = []
     for ch in chapters:
         c = counts(by_chapter.get(ch["stem"], []))
         total = sum(c.values())
+        extra = notes.get(ch["stem"], "")
+        sub = ch["subtitle"]
+        if extra and extra not in sub:
+            sub = f"{sub} · {extra}".strip(" ·")
         rows.append(
             f"""
     <a class="entry-link" href="{ch['stem']}.html">
       <h2>{_md(ch['name'])}</h2>
-      <p class="sub" style="margin:0 0 .35rem">{_md(ch['subtitle'])}</p>
+      <p class="sub" style="margin:0 0 .35rem">{_md(sub)}</p>
       <p class="tallyline">
         <span class="prov verified">{c['verified']} verified</span>
         {f'<span class="prov unverified">{c["unverified"]} cited, unchecked</span>' if c['unverified'] else ''}
@@ -697,6 +721,7 @@ def index_page(chapters: list[dict], by_chapter: dict) -> str:
       <strong>{grand['unverified']}</strong> cited from sources we may not reproduce,
       and <strong>{grand['unsourced']}</strong> we could not verify. That last number
       is printed here for the same reason it is printed everywhere else.</p>
+      {f'<p class="sub">{html.escape(collection_note)}</p>' if collection_note else ''}
       {''.join(rows)}
       <div class="atticus-rail" id="ask-atticus" style="margin-top:1.6rem">
         <div class="at-head"><strong>Atticus floats on every page</strong><span class="mono">Bottom-right</span></div>
@@ -725,6 +750,8 @@ def _build_collection(
     sources_dir: Path,
     *,
     collection_title: str | None = None,
+    collection_note: str = "",
+    entry_notes: dict[str, str] | None = None,
     depth: str = "../",
     allowed_stems: set[str] | None = None,
 ) -> tuple[list[dict], dict]:
@@ -753,6 +780,11 @@ def _build_collection(
         cards, callout_to, span_to = build_for_chapter(
             records, ch["stem"], ch_entries
         )
+        week_html = ""
+        if ch["stem"] == "01-how-europe-walked-in":
+            from tools.week_1914 import render_html as week_render
+
+            week_html = week_render()
         page = render(
             ch,
             ch_entries,
@@ -760,6 +792,7 @@ def _build_collection(
             cards=cards,
             callout_to=callout_to,
             span_to=span_to,
+            week_html=week_html,
         )
         # Fix relative brand/script depth for nested collections
         if depth != "../":
@@ -783,7 +816,12 @@ def _build_collection(
             leftover.unlink()
             print(f"  unpublished {leftover.name}")
 
-    idx = index_page(chapters, by_chapter)
+    idx = index_page(
+        chapters,
+        by_chapter,
+        collection_note=collection_note,
+        entry_notes=entry_notes,
+    )
     if collection_title:
         idx = idx.replace(
             "The entries",
@@ -826,11 +864,24 @@ def main(argv=None) -> int:
         depth = "../../"
         print(f"-- collection {r['id']} → {dest}")
         allowed = open_by_collection.get(r["id"])
+        note = ""
+        extras = None
+        if r["id"] == "modern-wars":
+            note = (
+                "1914 is the only complete Modern Wars set: a July crisis week on "
+                "How Europe walked in. Victory and the Bill is American papers, not the war. "
+                "The week is not a school year and not for sale."
+            )
+            extras = {
+                "01-how-europe-walked-in": "July crisis week · complete 1914 set",
+            }
         _build_collection(
             dest,
             Path(r["chapters_dir"]),
             Path(r["sources_dir"]),
             collection_title=r.get("title"),
+            collection_note=note,
+            entry_notes=extras,
             depth=depth,
             allowed_stems=allowed,
         )

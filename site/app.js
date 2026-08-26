@@ -86,6 +86,54 @@
 
   document.querySelectorAll("[data-entry]").forEach(initTabs);
 
+  /* ── 1914 week: height + jump to the day's held section ─────────────── */
+  function initWeek(root) {
+    var week = root.querySelector("[data-week]");
+    if (!week) return;
+
+    function setHeight(h) {
+      week.setAttribute("data-height", h);
+      week.querySelectorAll("[data-week-height]").forEach(function (b) {
+        var on = b.getAttribute("data-week-height") === h;
+        b.classList.toggle("is-on", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      try {
+        sessionStorage.setItem(
+          "hl-week-height-" + (root.getAttribute("data-entry") || ""),
+          h
+        );
+      } catch (e) { /* ignore */ }
+    }
+
+    week.querySelectorAll("[data-week-height]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        setHeight(b.getAttribute("data-week-height"));
+      });
+    });
+    try {
+      var saved = sessionStorage.getItem(
+        "hl-week-height-" + (root.getAttribute("data-entry") || "")
+      );
+      if (saved === "kid" || saved === "parent") setHeight(saved);
+    } catch (e) { /* ignore */ }
+
+    week.querySelectorAll("[data-week-read]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-week-read");
+        var readTab = root.querySelector("#tab-read");
+        if (readTab) readTab.click();
+        var target = document.getElementById(id);
+        if (target) {
+          window.setTimeout(function () {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 40);
+        }
+      });
+    });
+  }
+  document.querySelectorAll("[data-entry]").forEach(initWeek);
+
   /* ── optional weigh scale ───────────────────────────────────────────────── */
   var before = null;
   var after = null;

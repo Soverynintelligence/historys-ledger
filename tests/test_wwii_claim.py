@@ -72,3 +72,5 @@ def test_homepage_and_indexes_agree_with_the_open_shelf():
     assert "Victory and the Bill" in wars
     assert "How Europe walked in" in wars
     assert "of 14 quotations" in wars
+    assert "July crisis week" in wars
+    assert "only complete Modern Wars set" in wars

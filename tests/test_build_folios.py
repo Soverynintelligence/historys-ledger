@@ -91,7 +91,8 @@ def test_chapter_to_html_keeps_primary_source_callouts():
     )
     assert "primary-source" in html
     assert "Declaration of Independence" in html
-    assert "<h2>" in html
+    assert "<h2" in html
+    assert 'id="section"' in html
 
 
 def test_chapter_to_html_makes_callouts_and_quotes_tappable():
@@ -118,6 +119,14 @@ def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
     assert "Victory and the Bill" in wars
     assert "American papers, not the war" in wars
     assert "How Europe walked in" in wars
+    assert "July crisis week" in wars
+    wwi = (tmp_path / "modern-wars" / "01-how-europe-walked-in.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'data-week="1914"' in wwi
+    assert "Parent table" in wwi
+    assert "Shorter path" in wwi
+    assert "Grey Book No. 20" in wwi
     wwii = (tmp_path / "modern-wars" / "01-world-war-ii.html").read_text(encoding="utf-8")
     assert "1939–1945" not in wwii
     assert "Holocaust" in wwii

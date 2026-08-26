@@ -2046,3 +2046,102 @@ body.atticus-open { /* keep scroll unless mobile full */ }
   0% { background: rgba(176, 141, 60, 0.35); }
   100% { background: transparent; }
 }
+
+/* ── 1914 July crisis week (same folio, not a second brand) ───────────── */
+
+.week-path {
+  margin: 1.1rem 0 0;
+  padding: 0.95rem 1.05rem 1.05rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--seal);
+}
+.week-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--ink-3);
+}
+.week-path > h2 {
+  font-family: var(--display);
+  font-size: 1.45rem;
+  margin: 0 0 0.4rem;
+  color: var(--navy);
+}
+.week-path > .sub { margin: 0 0 0.75rem; }
+.week-height {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.9rem;
+}
+.week-hbtn {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--walnut);
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+.week-hbtn.is-on,
+.week-hbtn[aria-pressed="true"] {
+  color: var(--navy);
+  border-color: var(--navy);
+  background: rgba(176, 141, 60, 0.12);
+}
+.week-hunt {
+  margin: 0 0 0.95rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px dashed var(--rule);
+  background: rgba(237, 227, 200, 0.55);
+}
+.week-hunt h3 {
+  margin: 0 0 0.35rem;
+  color: var(--ink-3);
+}
+.week-hunt p { margin: 0 0 0.55rem; }
+.week-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.week-rail a { color: var(--navy); text-decoration: none; }
+.week-rail a:hover { border-bottom: 1px solid var(--brass); }
+.week-days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+.week-day {
+  padding: 0.15rem 0 0.35rem;
+  border-top: 1px solid var(--faint);
+}
+.week-day h3 {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  margin: 0.7rem 0 0.35rem;
+  color: var(--navy);
+}
+.week-day h3 .mono {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--brass);
+  margin-bottom: 0.15rem;
+}
+.week-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.55rem 0 0;
+}
+.week-path[data-height="parent"] .week-kid { display: none; }
+.week-path[data-height="kid"] .week-parent { display: none; }

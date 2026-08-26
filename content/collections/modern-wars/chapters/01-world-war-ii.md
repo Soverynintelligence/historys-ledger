@@ -98,5 +98,5 @@ These papers establish that the bomb was announced as used on Hiroshima, and tha
 ---
 
 **Further Reading — Primary Sources:** FDR war message (1941) · Atlantic Charter (1941) · Executive Order 9066 (1942) · *Korematsu v. United States* (1944) · Allied declaration on the defeat of Germany (1945) · Truman Hiroshima statement (1945) · Japanese Instrument of Surrender (1945).
-**On this shelf:** How Europe walked in (1914) is open and complete. This folio is not a complete WWII set.
+**On this shelf:** How Europe walked in (1914) is open — the only complete Modern Wars set, a July crisis week. This folio is not a complete WWII set.
 **Next:** Korea and Vietnam — planned, not yet open.
