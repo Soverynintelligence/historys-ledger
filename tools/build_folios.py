@@ -871,7 +871,7 @@ def main(argv=None) -> int:
             note = (
                 "1914 is the only complete Modern Wars set: a July crisis week on "
                 "How Europe walked in. Victory and the Bill is American papers, not the war. "
-                "The week is not a school year and not for sale."
+                "The week is not a school year."
             )
             extras = {
                 "01-how-europe-walked-in": "July crisis week · complete 1914 set",

@@ -4,6 +4,7 @@ from pathlib import Path
 from tools.source_cards import status_for
 from tools.source_records import load_all
 from tools.week_1914 import (
+    BUY_LINE,
     CHAPTER,
     DAYS,
     ENTRY_STEM,
@@ -64,12 +65,16 @@ def test_hunt_artifacts_are_held_grey_book_and_ultimatum():
     assert "cite-or-stop" in html or "Cite or stop" in html
 
 
-def test_week_copy_is_a_complete_1914_set_not_a_war_name_or_a_sale():
+def test_week_copy_is_a_complete_1914_set_priced_nineteen():
     html = render_html()
     assert "complete 1914 set" in html
     assert "July crisis week" in html
     assert "not a school year" in html
-    assert "not for sale" in html
+    assert "not for sale" not in html.lower()
+    assert BUY_LINE in html
+    assert "$19. One week at the table." in html
+    assert "Fourteen held documents, Monday through Friday." in html
+    assert "When we don't hold the page, Atticus stops." in html
     assert "Nothing is scored" in html
     assert "Weigh stays optional" in html
     assert "Parent table" in html
@@ -77,7 +82,14 @@ def test_week_copy_is_a_complete_1914_set_not_a_war_name_or_a_sale():
     for token in FORBIDDEN_WEEK_COPY:
         assert token not in html
     assert "quiz" not in html.lower()
-    assert "$" not in html
+    assert "$79" not in html
+    assert "waitlist" not in html.lower()
+    assert "Buy" not in html
+    assert "mailto:" not in html
+    assert "stripe" not in html.lower()
+    assert 'data-week-buy' not in html
+    assert "not a school year" in SCOPE
+    assert "not for sale" not in SCOPE.lower()
 
 
 def test_week_html_does_not_invent_quotations():
@@ -113,7 +125,7 @@ def test_no_new_war_chapter_files_and_no_redirects_loop():
         assert not list(WARS_CH.glob(f"*{name}*"))
 
 
-def test_folio_and_indexes_carry_the_week_without_selling_it(tmp_path):
+def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
     build_main([str(tmp_path)])
     folio = (tmp_path / "modern-wars" / "01-how-europe-walked-in.html").read_text(
         encoding="utf-8"
@@ -125,10 +137,17 @@ def test_folio_and_indexes_carry_the_week_without_selling_it(tmp_path):
     assert "Grey Book No. 20" in folio
     assert "panel-weigh" in folio
     assert "quiz" not in folio.lower()
+    assert BUY_LINE in folio
+    assert "not for sale" not in folio.lower()
+    assert "Buy" not in folio
+    assert "waitlist" not in folio.lower()
+    assert "mailto:" not in folio
+    assert "$79" not in folio
     assert "July crisis week" in wars
     assert "only complete Modern Wars set" in wars
-    assert "not for sale" in wars
+    assert "not for sale" not in wars.lower()
     assert "not a school year" in wars
+    assert "$79" not in wars
     home = HOME.read_text(encoding="utf-8")
     assert "July crisis week" in home
     assert "complete" in home
