@@ -2,7 +2,8 @@
 
 The week is chrome on How Europe walked in. It names held source ids and
 existing section headings only. It does not invent quotations, dates,
-figures, or scenes. It does not claim a war name, a school year, or a sale.
+figures, or scenes. It does not claim a war name or a school year.
+Price is stated in copy. Checkout is not wired here.
 """
 from __future__ import annotations
 
@@ -49,6 +50,9 @@ FORBIDDEN_WEEK_COPY = (
     "1919",
     "Holocaust",
     "Family year",
+    "not for sale",
+    "waitlist",
+    "$79",
     "Stripe",
     "checkout",
     "Korea",
@@ -163,8 +167,14 @@ DAYS = (
 SCOPE = (
     "This is a complete 1914 set — a July crisis week on this entry. "
     "A parent can run Monday–Friday at the table without leaving this page "
-    "or its held cards. It is not a school year. It is not for sale. It does "
+    "or its held cards. It is not a school year. It does "
     "not claim a war beyond the papers we hold."
+)
+
+# Locked buy line (Jon). Honest price only — no charge control until Stripe exists.
+BUY_LINE = (
+    "$19. One week at the table. Fourteen held documents, "
+    "Monday through Friday. When we don't hold the page, Atticus stops."
 )
 
 HUNT_BLURB = (
@@ -237,7 +247,7 @@ def validate() -> list[str]:
             errors.append(f"hunt source {sid} is not held")
 
     copy = " ".join(
-        [SCOPE, HUNT_BLURB]
+        [SCOPE, BUY_LINE, HUNT_BLURB]
         + [d["parent"] for d in DAYS]
         + [d["kid"] for d in DAYS]
         + [d["title"] for d in DAYS]
@@ -251,8 +261,13 @@ def validate() -> list[str]:
         errors.append("scope must name a complete 1914 set / July crisis week")
     if "not a school year" not in SCOPE.lower():
         errors.append("scope must say this is not a school year")
-    if "not for sale" not in SCOPE.lower():
-        errors.append("scope must say this is not for sale")
+    if "not for sale" in copy.lower():
+        errors.append("week copy must not say this is not for sale")
+    if BUY_LINE != (
+        "$19. One week at the table. Fourteen held documents, "
+        "Monday through Friday. When we don't hold the page, Atticus stops."
+    ):
+        errors.append("buy line must be the locked $19 sentence")
 
     return errors
 
@@ -308,6 +323,7 @@ def render_html() -> str:
         <p class="mono week-kicker">July crisis week · complete 1914 set</p>
         <h2 id="week-1914-h">One week on this entry</h2>
         <p class="sub">{html.escape(SCOPE)}</p>
+        <p class="sub week-buy">{html.escape(BUY_LINE, quote=False)}</p>
         <div class="week-height" role="group" aria-label="Path height">
           <button type="button" class="week-hbtn is-on" data-week-height="parent" aria-pressed="true">Parent table</button>
           <button type="button" class="week-hbtn" data-week-height="kid" aria-pressed="false">Shorter path</button>
