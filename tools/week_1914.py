@@ -3,7 +3,7 @@
 The week is chrome on How Europe walked in. It names held source ids and
 existing section headings only. It does not invent quotations, dates,
 figures, or scenes. It does not claim a war name or a school year.
-Price is stated in copy. Checkout is not wired here.
+Price is stated in copy. The one Buy control is the live 1914 Payment Link.
 """
 from __future__ import annotations
 
@@ -171,11 +171,13 @@ SCOPE = (
     "not claim a war beyond the papers we hold."
 )
 
-# Locked buy line (Jon). Honest price only — no charge control until Stripe exists.
+# Locked buy line (Jon). One live Payment Link — no second price, no Family SKU.
 BUY_LINE = (
     "$19. One week at the table. Fourteen held documents, "
     "Monday through Friday. When we don't hold the page, Atticus stops."
 )
+BUY_URL = "https://buy.stripe.com/14A4gz3Bp3S67Kcf9s83C00"
+BUY_LABEL = "Buy this week"
 
 HUNT_BLURB = (
     "The artifact is the held card. Open Grey Book No. 20 or the ultimatum. "
@@ -268,6 +270,10 @@ def validate() -> list[str]:
         "Monday through Friday. When we don't hold the page, Atticus stops."
     ):
         errors.append("buy line must be the locked $19 sentence")
+    if BUY_URL != "https://buy.stripe.com/14A4gz3Bp3S67Kcf9s83C00":
+        errors.append("buy url must be the live 1914 Payment Link")
+    if BUY_LABEL != "Buy this week":
+        errors.append("buy label must be the short honest label")
 
     return errors
 
@@ -323,7 +329,10 @@ def render_html() -> str:
         <p class="mono week-kicker">July crisis week · complete 1914 set</p>
         <h2 id="week-1914-h">One week on this entry</h2>
         <p class="sub">{html.escape(SCOPE)}</p>
+        <div class="week-buy-row">
         <p class="sub week-buy">{html.escape(BUY_LINE, quote=False)}</p>
+        <a class="btn" data-week-buy href="{html.escape(BUY_URL, quote=True)}" target="_blank" rel="noopener noreferrer">{html.escape(BUY_LABEL)}</a>
+        </div>
         <div class="week-height" role="group" aria-label="Path height">
           <button type="button" class="week-hbtn is-on" data-week-height="parent" aria-pressed="true">Parent table</button>
           <button type="button" class="week-hbtn" data-week-height="kid" aria-pressed="false">Shorter path</button>

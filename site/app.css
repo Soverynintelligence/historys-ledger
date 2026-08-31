@@ -2067,6 +2067,15 @@ body.atticus-open { /* keep scroll unless mobile full */ }
   color: var(--navy);
 }
 .week-path > .sub { margin: 0 0 0.75rem; }
+.week-buy-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 0 0 0.75rem;
+}
+.week-buy-row > .week-buy { margin: 0; flex: 1 1 16rem; }
+.week-buy-row > .btn { flex: 0 0 auto; }
 .week-height {
   display: flex;
   flex-wrap: wrap;
