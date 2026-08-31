@@ -4,7 +4,9 @@ from pathlib import Path
 from tools.source_cards import status_for
 from tools.source_records import load_all
 from tools.week_1914 import (
+    BUY_LABEL,
     BUY_LINE,
+    BUY_URL,
     CHAPTER,
     DAYS,
     ENTRY_STEM,
@@ -75,6 +77,10 @@ def test_week_copy_is_a_complete_1914_set_priced_nineteen():
     assert "$19. One week at the table." in html
     assert "Fourteen held documents, Monday through Friday." in html
     assert "When we don't hold the page, Atticus stops." in html
+    assert BUY_LABEL in html
+    assert BUY_URL in html
+    assert html.count(BUY_URL) == 1
+    assert f'data-week-buy href="{BUY_URL}"' in html
     assert "Nothing is scored" in html
     assert "Weigh stays optional" in html
     assert "Parent table" in html
@@ -84,12 +90,11 @@ def test_week_copy_is_a_complete_1914_set_priced_nineteen():
     assert "quiz" not in html.lower()
     assert "$79" not in html
     assert "waitlist" not in html.lower()
-    assert "Buy" not in html
+    assert "Family year" not in html
     assert "mailto:" not in html
-    assert "stripe" not in html.lower()
-    assert 'data-week-buy' not in html
     assert "not a school year" in SCOPE
     assert "not for sale" not in SCOPE.lower()
+    assert BUY_URL == "https://buy.stripe.com/14A4gz3Bp3S67Kcf9s83C00"
 
 
 def test_week_html_does_not_invent_quotations():
@@ -138,9 +143,12 @@ def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
     assert "panel-weigh" in folio
     assert "quiz" not in folio.lower()
     assert BUY_LINE in folio
+    assert BUY_LABEL in folio
+    assert BUY_URL in folio
+    assert folio.count(BUY_URL) == 1
     assert "not for sale" not in folio.lower()
-    assert "Buy" not in folio
     assert "waitlist" not in folio.lower()
+    assert "Family year" not in folio
     assert "mailto:" not in folio
     assert "$79" not in folio
     assert "July crisis week" in wars
@@ -148,7 +156,9 @@ def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
     assert "not for sale" not in wars.lower()
     assert "not a school year" in wars
     assert "$79" not in wars
+    assert BUY_URL not in wars
     home = HOME.read_text(encoding="utf-8")
     assert "July crisis week" in home
     assert "complete" in home
     assert "The Bullet and the Podium" not in home
+    assert BUY_URL not in home
