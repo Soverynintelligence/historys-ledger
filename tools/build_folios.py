@@ -49,7 +49,7 @@ STATE_WORD = {
 }
 
 _QUOTE = re.compile(r"^> \*[\"“](.+?)[\"”]\*\s*$(?:\n^> — (.+?)$)?", re.M)
-ASSET_V = "20260826week"
+ASSET_V = "20260831buy"
 
 
 def _heading_id(s: str) -> str:
