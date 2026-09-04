@@ -267,7 +267,7 @@ def chapter_to_html(
     return "\n".join(out)
 
 
-def shell_head(title: str, description: str, *, depth: str = "../") -> str:
+def shell_head(title: str, description: str, *, depth: str = "../", extra_class: str = "") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -282,7 +282,7 @@ def shell_head(title: str, description: str, *, depth: str = "../") -> str:
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{depth}app.css?v={ASSET_V}">
 </head>
-<body>
+<body{(' class="' + extra_class + '"') if extra_class else ''}>
 <div class="app-shell">
 """
 
@@ -302,6 +302,7 @@ def shell_bar(active: str, *, depth: str = "../") -> str:
       </a>
       <nav class="app-nav" aria-label="Primary">
         {link("read/", "Entries", "entries")}
+        {link("read/kids/", "Kids", "kids")}
         <a href="/family"{family_cur}>Family</a>
         <a href="#ask" data-open-atticus>Ask Atticus</a>
       </nav>
@@ -478,6 +479,7 @@ def render(
     callout_to: dict[str, str] | None = None,
     span_to: dict[str, str] | None = None,
     week_html: str = "",
+    extra_class: str = "",
 ) -> str:
     c = counts(entries)
     total = sum(c.values()) or 0
@@ -576,7 +578,9 @@ def render(
       </div>
       <h1>{_md(ch["name"])} <em>{_md(ch["subtitle"])}</em></h1>
       <p class="sub">{
-        "A complete 1914 set — July crisis week on this page. Open any tab. Tap a held card. Weigh stays optional."
+        "Same papers as the parent table. The words around them are easier. Tap a quote to see it in the document. Atticus still stops when he cannot cite."
+        if extra_class == "is-kids"
+        else "A complete 1914 set — July crisis week on this page. Open any tab. Tap a held card. Weigh stays optional."
         if week_html
         else "Open any tab. In Read, tap a primary source or a long quotation to open its card. Atticus floats bottom-right — ask him anything on the record."
       }</p>
@@ -586,11 +590,10 @@ def render(
       </div>
 {week_html if week_html else '''
       <div class="challenge-bar">
-        <h3>Don&rsquo;t just scroll — interrogate it</h3>
-        <p>History is boring when it lectures. Ask Atticus to stress-test this entry, or open the Sources tab and pull a document.</p>
+        <h3>{'Ask about the papers' if extra_class == 'is-kids' else 'Don&rsquo;t just scroll — interrogate it'}</h3>
+        <p>{'Atticus only answers from the documents we hold. If we do not have the page, he stops.' if extra_class == 'is-kids' else 'History is boring when it lectures. Ask Atticus to stress-test this entry, or open the Sources tab and pull a document.'}</p>
         <div class="chips-row">
           <button type="button" class="atticus-chip" data-ask-atticus="What does this entry claim, in one sentence — from the documents?">One-sentence claim</button>
-          <button type="button" class="atticus-chip" data-ask-atticus="Where is the biggest gap in the sources for this entry?">Biggest gap</button>
           <button type="button" class="atticus-chip" data-ask-atticus="Show me one verified quotation and where it sits in the record.">Show a verified quote</button>
           <button type="button" class="btn quiet" data-open-atticus>Ask Atticus →</button>
         </div>
@@ -672,6 +675,7 @@ def render(
         shell_head(
             f"History's Ledger — {ch['name']}",
             f"{ch['name']} — established facts, primary sources, and what remains unchecked.",
+            extra_class=extra_class,
         )
         + shell_bar("entries")
         + body
@@ -755,6 +759,7 @@ def _build_collection(
     entry_notes: dict[str, str] | None = None,
     depth: str = "../",
     allowed_stems: set[str] | None = None,
+    extra_class: str = "",
 ) -> tuple[list[dict], dict]:
     records = load_all(str(sources_dir)) if sources_dir.is_dir() else []
     entries = apparatus(str(chapters_dir), str(sources_dir))
@@ -794,6 +799,7 @@ def _build_collection(
             callout_to=callout_to,
             span_to=span_to,
             week_html=week_html,
+            extra_class=extra_class,
         )
         # Fix relative brand/script depth for nested collections
         if depth != "../":
@@ -823,10 +829,18 @@ def _build_collection(
         collection_note=collection_note,
         entry_notes=entry_notes,
     )
+    if extra_class:
+        idx = idx.replace("<body>", f'<body class="{html.escape(extra_class, quote=True)}">', 1)
     if collection_title:
         idx = idx.replace(
             "The entries",
             html.escape(collection_title) + " — entries",
+            1,
+        )
+    if extra_class == "is-kids":
+        idx = idx.replace(
+            "Each entry states what is established, shows the documents,\n      says what it could not check, and hands the judgement back to you.",
+            "Ages 10–12. Same documents as the parent table. The words around the quotes are easier. The quotes are still the real ones.",
             1,
         )
     if depth != "../":
@@ -885,6 +899,7 @@ def main(argv=None) -> int:
             entry_notes=extras,
             depth=depth,
             allowed_stems=allowed,
+            extra_class="is-kids" if r["id"] == "kids" else "",
         )
 
     return 0

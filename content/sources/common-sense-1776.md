@@ -8,7 +8,7 @@ repository: Project Gutenberg
 url: https://www.gutenberg.org/files/147/147-0.txt
 rights: public-domain
 callout: *Common Sense*, 1776 — it sold perhaps 100,000 copies in a country of 2.5 million
-cited_by: [01-the-founding]
+cited_by: [01-the-founding, 01-the-declaration]
 fetched_at: 2026-08-14
 sha256: 2f5e4ec5f8135b6e2d0d20f8e703074d84f5dcc0a94f48b7d6c15f1eba4e7da6
 ---

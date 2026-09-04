@@ -2154,3 +2154,21 @@ body.atticus-open { /* keep scroll unless mobile full */ }
 }
 .week-path[data-height="parent"] .week-kid { display: none; }
 .week-path[data-height="kid"] .week-parent { display: none; }
+
+body.is-kids {
+  font-size: 21px;
+  line-height: 1.68;
+}
+body.is-kids .prose {
+  font-size: 1.14rem;
+  max-width: 38rem;
+}
+body.is-kids .prose h2 {
+  font-size: 1.35rem;
+}
+body.is-kids .app-leaf h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+body.is-kids .challenge-bar h3 {
+  font-size: 1.15rem;
+}

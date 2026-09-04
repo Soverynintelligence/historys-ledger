@@ -8,7 +8,7 @@ repository: Avalon Project
 url: https://avalon.law.yale.edu/18th_century/fed51.asp
 rights: public-domain
 callout: Federalist No. 51
-cited_by: [01-the-founding]
+cited_by: [01-the-founding, 02-the-constitution]
 fetched_at: 2026-08-14
 sha256: 24b1056107a9ec1ef7ff844a3bc73139bc96951bfd3e30a36bfa52d790b3f2e3
 ---

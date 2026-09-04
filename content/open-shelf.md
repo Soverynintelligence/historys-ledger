@@ -12,6 +12,10 @@ He refuses everything else. Silence is the product working.
 - 05-civil-rights — The Civil Rights Movement — The Promise Redeemed
 - 06-cold-war — The Cold War — The Long Standoff
 
+## Kids path · Founding — open
+- 01-the-declaration — The Declaration — The Promise They Wrote Down
+- 02-the-constitution — The Constitution — The Rules They Wrote Down
+
 ## Modern Wars — open
 - 01-how-europe-walked-in — How Europe walked in (1914 · complete July crisis week)
 - 01-world-war-ii — Victory and the Bill — American papers, not the war

@@ -8,7 +8,7 @@ repository: Massachusetts Historical Society
 url: https://www.masshist.org/digitaladams/archive/doc?id=L17760331aa
 rights: public-domain
 callout: Adams Family Papers, Massachusetts Historical Society
-cited_by: [01-the-founding]
+cited_by: [01-the-founding, 01-the-declaration]
 fetched_at: 2026-08-14
 sha256: f65ffc746ab0ba81419af9f974ac9434f3068f5f004586c10d0d7a2ddb2665ee
 ---

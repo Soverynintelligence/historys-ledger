@@ -7,7 +7,7 @@ repository: National Archives
 url: https://www.archives.gov/founding-docs/declaration-transcript
 rights: us-government
 callout: Declaration of Independence, 1776
-cited_by: [01-the-founding, 02-slavery-and-emancipation]
+cited_by: [01-the-founding, 02-slavery-and-emancipation, 01-the-declaration, 02-the-constitution]
 fetched_at: 2026-08-14
 sha256: 330ec83798013bf4af82ee55fb2c8b3a38a8f7476c0b0689481ac6d218238fae
 ---

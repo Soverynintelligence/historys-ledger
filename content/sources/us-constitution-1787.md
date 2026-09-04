@@ -7,7 +7,7 @@ repository: National Archives
 url: https://www.archives.gov/founding-docs/constitution-transcript
 rights: us-government
 callout: U.S. Constitution, 1787 — Articles I and IV
-cited_by: [01-the-founding]
+cited_by: [01-the-founding, 02-the-constitution]
 fetched_at: 2026-08-14
 sha256: de10d68419ba245f752ac998e01b90716f62184736eb9bbfbc067318d682f1e1
 ---
