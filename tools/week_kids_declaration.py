@@ -53,6 +53,8 @@ FORBIDDEN_WEEK_COPY = (
     "WW1",
     "WWI",
     "World War",
+    "artifact",
+    "Cite or stop",
 )
 
 # Headings must match ## lines already in the chapter.
@@ -74,7 +76,7 @@ DAYS = (
         "atticus": (
             "Do we hold the Declaration line “We hold these truths to be "
             "self-evident, that all men are created equal” in this entry? "
-            "Cite or stop."
+            "Show the line, or stop."
         ),
         "stamp": "Stamp: I opened the card and found the line",
     },
@@ -94,7 +96,7 @@ DAYS = (
         ),
         "atticus": (
             "Does our held Declaration card include “Life, Liberty and the "
-            "pursuit of Happiness”? Cite or stop."
+            "pursuit of Happiness”? Show the line, or stop."
         ),
         "stamp": "Stamp: I opened the card and found the line",
     },
@@ -117,7 +119,7 @@ DAYS = (
         ),
         "atticus": (
             "Do we hold Paine’s Common Sense line about a continent governed "
-            "by an island? Cite or stop."
+            "by an island? Show the line, or stop."
         ),
         "stamp": "Stamp: I opened the card and found the line",
     },
@@ -137,7 +139,7 @@ DAYS = (
         ),
         "atticus": (
             "Do we hold Abigail Adams’s line “Do not put such unlimited power "
-            "into the hands of the Husbands”? Cite or stop."
+            "into the hands of the Husbands”? Show the line, or stop."
         ),
         "stamp": "Stamp: I opened the card and found the line",
     },
@@ -155,20 +157,23 @@ DAYS = (
             "Open the Brom and Bett card. What does our card actually say? "
             "If we don’t hold it, we stop."
         ),
-        "atticus": "What does our Brom and Bett card actually say? Cite or stop.",
+        "atticus": (
+            "What does our Brom and Bett card actually say? "
+            "If we don’t hold it, we stop."
+        ),
         "stamp": "Stamp: I opened the named source — or saw it is not held",
     },
 )
 
 INTRO = (
-    "Same papers as the grown-up table. Your job is the hunt: open the card "
-    "and find the marked line. If we don’t hold it, we stop. "
+    "Same papers as the grown-up table. Open the card. Find the marked line. "
+    "If we don’t hold it, we stop. "
     "“Atticus stopped” is a win for honesty."
 )
 
 HUNT_BLURB = (
-    "The artifact is the held card. Open the Declaration, Common Sense, or "
-    "Abigail’s letter. Fun is find-the-line. If we don’t hold it, we stop."
+    "The hunt is the card we hold. Open the Declaration, Common Sense, or "
+    "Abigail’s letter. Find the line. If we don’t hold it, we stop."
 )
 
 SIT_TEACH = (
@@ -176,7 +181,9 @@ SIT_TEACH = (
     "the card — not a scored test. If Atticus stops, that is the win."
 )
 
-SIT_ATTICUS = "What does our Brom and Bett card actually say? Cite or stop."
+SIT_ATTICUS = (
+    "What does our Brom and Bett card actually say? If we don’t hold it, we stop."
+)
 
 SIT_DINNER = (
     "Friday dinner: what did our Brom and Bett card actually say? "
@@ -349,8 +356,8 @@ def render_html() -> str:
 
     return f"""
       <section class="week-path" data-week="kids-declaration" data-height="kid" aria-labelledby="week-kids-decl-h">
-        <p class="mono week-kicker">Kids hunt · held cards only</p>
-        <h2 id="week-kids-decl-h">One week on this entry</h2>
+        <p class="mono week-kicker">Kids hunt · cards we hold</p>
+        <h2 id="week-kids-decl-h">This week’s hunt</h2>
         <p class="sub">{html.escape(INTRO)}</p>
         <p class="note week-family"><a href="/family">Parents: Year 1 →</a></p>
         <div class="week-hunt" id="week-hunt">
@@ -360,7 +367,7 @@ def render_html() -> str:
             {_btn("declaration-of-independence-1776", "The Declaration")}
             {_btn("common-sense-1776", "Common Sense")}
             {_btn("adams-family-papers", "Abigail’s letter")}
-            {_atticus("If we don’t hold a paper named on this entry, stop. Cite or stop.", "Ask Atticus: cite or stop")}
+            {_atticus("If we don’t hold a paper named on this entry, stop. Show the line, or stop.", "Ask Atticus: show the line — or stop")}
           </p>
         </div>
         <details class="week-sit">
@@ -368,6 +375,7 @@ def render_html() -> str:
           <p>{html.escape(SIT_TEACH)}</p>
           <p class="week-actions">{_atticus(SIT_ATTICUS, "Ask Atticus: what does the card say?")}</p>
           <p>{html.escape(SIT_DINNER)}</p>
+          <p class="week-grownup"><a href="/read/">Grown-up shelf</a></p>
         </details>
         <nav class="week-rail" aria-label="Declaration hunt week">{days_nav}</nav>
         <ol class="week-days">
@@ -376,6 +384,6 @@ def render_html() -> str:
         <p class="week-actions">
           <button type="button" class="btn quiet" data-hunt-clear>Clear hunts</button>
         </p>
-        <p class="note">Weigh stays optional. Nothing is scored.</p>
+        <p class="note">Weigh stays optional. Nothing is scored. This is not a test.</p>
       </section>
 """

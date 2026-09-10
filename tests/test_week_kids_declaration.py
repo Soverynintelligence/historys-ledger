@@ -60,14 +60,15 @@ def test_held_hunts_open_only_cited_held_cards():
         assert day["read_id"] == slug(day["heading"])
 
 
-def test_hunt_copy_is_cite_or_stop_and_unscored():
+def test_hunt_copy_is_hold_or_stop_and_unscored():
     html = render_html()
-    assert "One week on this entry" in html
+    assert "This week’s hunt" in html
     assert 'data-week="kids-declaration"' in html
     assert 'data-height="kid"' in html
     assert INTRO in html
     assert "Atticus stopped" in html
     assert "If we don’t hold it, we stop" in html or "If we don't hold it, we stop" in html
+    assert "Show the line, or stop" in html or "show the line — or stop" in html
     assert "Weigh stays optional. Nothing is scored." in html
     assert "Clear hunts" in html
     assert "data-hunt-stamp" in html
@@ -77,12 +78,15 @@ def test_hunt_copy_is_cite_or_stop_and_unscored():
     assert "Parents: Year 1" in html
     assert 'href="/family"' in html
     assert "What does our card actually say" in html
+    assert "Grown-up shelf" in html
+    assert 'href="/read/">Grown-up shelf' in html
     assert 'data-open-card="declaration-of-independence-1776"' in html
     assert 'data-open-card="common-sense-1776"' in html
     assert 'data-open-card="adams-family-papers"' in html
     assert 'data-open-card="brom-and-bett-v-ashley-1781"' in html
     assert "data-ask-atticus" in html
-    assert "Cite or stop" in html
+    assert "artifact" not in html
+    assert "Cite or stop" not in html
     for token in FORBIDDEN_WEEK_COPY:
         assert token not in html
     assert "quiz" not in html.lower()
@@ -142,9 +146,46 @@ def test_folio_carries_hunt_on_declaration_only(tmp_path):
     assert 'data-week="kids-declaration"' not in const
     assert "data-hunt-stamp" not in const
     assert "One week on this entry" not in const
+    assert "This week’s hunt" not in const
     assert "Ask about the papers" in const
     assert "extra_class" not in const
     assert "Hunt week" not in kids_idx
     assert "quiz" not in decl.lower()
     assert "$19" not in decl
     assert "waitlist" not in decl.lower()
+    assert "Grown-up details" in decl
+    assert "characterisation" not in decl
+    assert "The good part matters more." in decl
+    assert "The achievement outweighs the cost." not in decl
+    assert 'id="they-put-it-on-paper"' in decl
+    assert "Kids path" in decl
+
+    def entries_href(page: str) -> str:
+        start = page.find('<nav class="app-nav"')
+        end = page.find("</nav>", start)
+        nav = page[start:end]
+        marker = ">Entries</a>"
+        at = nav.find(marker)
+        href_at = nav.rfind("href=", 0, at)
+        return nav[href_at:].split('"', 2)[1]
+
+    assert entries_href(decl) == "/read/kids/"
+    assert entries_href(const) == "/read/kids/"
+    assert entries_href(kids_idx) == "/read/kids/"
+    assert 'href="/read/">Grown-up shelf' in decl
+    assert "Grown-up shelf" not in decl[decl.find('<nav class="app-nav"'):decl.find("</nav>")]
+    assert "Grown-up shelf" not in const
+    assert ">Kids</a>" in decl
+    assert 'href="/family"' in decl
+    assert "data-open-atticus" in decl
+
+    quotes = (
+        "We hold these truths to be self-evident, that all men are created equal…",
+        "There is something very absurd, in supposing a continent to be perpetually governed by an island.",
+        "Do not put such unlimited power into the hands of the Husbands.",
+    )
+    for q in quotes:
+        assert q in decl
+    chapter = CHAPTER.read_text(encoding="utf-8")
+    for q in quotes:
+        assert q in chapter
