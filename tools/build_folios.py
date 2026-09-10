@@ -49,7 +49,7 @@ STATE_WORD = {
 }
 
 _QUOTE = re.compile(r"^> \*[\"“](.+?)[\"”]\*\s*$(?:\n^> — (.+?)$)?", re.M)
-ASSET_V = "20260831buy"
+ASSET_V = "20260910hunt"
 
 
 def _heading_id(s: str) -> str:
@@ -462,6 +462,35 @@ def source_drawer_html() -> str:
 """
 
 
+def _lead_chrome(week_html: str, extra_class: str) -> str:
+    """Week wrap, or the challenge bar. Kids copy must actually interpolate."""
+    if week_html:
+        return week_html
+    if extra_class == "is-kids":
+        heading = "Ask about the papers"
+        blurb = (
+            "Atticus only answers from the documents we hold. "
+            "If we do not have the page, he stops."
+        )
+    else:
+        heading = "Don&rsquo;t just scroll — interrogate it"
+        blurb = (
+            "History is boring when it lectures. Ask Atticus to stress-test "
+            "this entry, or open the Sources tab and pull a document."
+        )
+    return f"""
+      <div class="challenge-bar">
+        <h3>{heading}</h3>
+        <p>{blurb}</p>
+        <div class="chips-row">
+          <button type="button" class="atticus-chip" data-ask-atticus="What does this entry claim, in one sentence — from the documents?">One-sentence claim</button>
+          <button type="button" class="atticus-chip" data-ask-atticus="Show me one verified quotation and where it sits in the record.">Show a verified quote</button>
+          <button type="button" class="btn quiet" data-open-atticus>Ask Atticus →</button>
+        </div>
+      </div>
+"""
+
+
 def scale_opts(prefix: str) -> str:
     return "".join(
         f'<button class="opt" type="button" aria-pressed="false" data-i="{i}">'
@@ -588,17 +617,7 @@ def render(
       <div class="progress-rail" data-progress-rail aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
-{week_html if week_html else '''
-      <div class="challenge-bar">
-        <h3>{'Ask about the papers' if extra_class == 'is-kids' else 'Don&rsquo;t just scroll — interrogate it'}</h3>
-        <p>{'Atticus only answers from the documents we hold. If we do not have the page, he stops.' if extra_class == 'is-kids' else 'History is boring when it lectures. Ask Atticus to stress-test this entry, or open the Sources tab and pull a document.'}</p>
-        <div class="chips-row">
-          <button type="button" class="atticus-chip" data-ask-atticus="What does this entry claim, in one sentence — from the documents?">One-sentence claim</button>
-          <button type="button" class="atticus-chip" data-ask-atticus="Show me one verified quotation and where it sits in the record.">Show a verified quote</button>
-          <button type="button" class="btn quiet" data-open-atticus>Ask Atticus →</button>
-        </div>
-      </div>
-'''}
+{_lead_chrome(week_html, extra_class)}
 
       <div class="entry-tabs" role="tablist" aria-label="Entry sections">
         <button class="tab" role="tab" id="tab-established" aria-controls="panel-established" aria-selected="true"><span class="n">I</span>Established</button>
@@ -791,6 +810,10 @@ def _build_collection(
             from tools.week_1914 import render_html as week_render
 
             week_html = week_render()
+        elif ch["stem"] == "01-the-declaration" and extra_class == "is-kids":
+            from tools.week_kids_declaration import render_html as kids_week_render
+
+            week_html = kids_week_render()
         page = render(
             ch,
             ch_entries,

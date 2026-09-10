@@ -134,6 +134,62 @@
   }
   document.querySelectorAll("[data-entry]").forEach(initWeek);
 
+  /* ── Kids hunt stamps: local only, no accounts, Weigh stays unscored ─── */
+  function initHuntStamps(root) {
+    var week = root.querySelector('[data-week="kids-declaration"]');
+    if (!week) return;
+    var key = "hl-hunt-stamps-" + (root.getAttribute("data-entry") || "");
+    var boxes = week.querySelectorAll("[data-hunt-stamp]");
+
+    function paint() {
+      boxes.forEach(function (box) {
+        var wrap = box.closest(".hunt-stamp");
+        if (wrap) wrap.classList.toggle("is-stamped", !!box.checked);
+      });
+    }
+
+    function load() {
+      try {
+        var raw = localStorage.getItem(key);
+        var days = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(days)) days = [];
+        boxes.forEach(function (box) {
+          box.checked = days.indexOf(box.getAttribute("data-hunt-stamp")) !== -1;
+        });
+      } catch (e) { /* ignore */ }
+      paint();
+    }
+
+    function save() {
+      var days = [];
+      boxes.forEach(function (box) {
+        if (box.checked) days.push(box.getAttribute("data-hunt-stamp"));
+      });
+      paint();
+      try {
+        localStorage.setItem(key, JSON.stringify(days));
+      } catch (e) { /* ignore */ }
+    }
+
+    boxes.forEach(function (box) {
+      box.addEventListener("change", save);
+    });
+    var clear = week.querySelector("[data-hunt-clear]");
+    if (clear) {
+      clear.addEventListener("click", function () {
+        boxes.forEach(function (box) {
+          box.checked = false;
+        });
+        try {
+          localStorage.removeItem(key);
+        } catch (e) { /* ignore */ }
+        paint();
+      });
+    }
+    load();
+  }
+  document.querySelectorAll("[data-entry]").forEach(initHuntStamps);
+
   /* ── optional weigh scale ───────────────────────────────────────────────── */
   var before = null;
   var after = null;

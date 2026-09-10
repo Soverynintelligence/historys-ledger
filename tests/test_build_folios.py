@@ -83,6 +83,8 @@ def test_render_is_tabbed_app_shell_not_wizard_gate():
     # not a hard gate before the record
     assert "Choose one to continue" not in page
     assert 'id="go0"' not in page
+    assert "Don't just scroll" in page or "Don&rsquo;t just scroll" in page
+    assert "extra_class" not in page
 
 
 def test_chapter_to_html_keeps_primary_source_callouts():
@@ -139,3 +141,14 @@ def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
     assert "family.html" not in wars
     assert 'href="/family"' in wwii
     assert "family.html" not in wwii
+    kids_decl = (tmp_path / "kids" / "01-the-declaration.html").read_text(
+        encoding="utf-8"
+    )
+    kids_const = (tmp_path / "kids" / "02-the-constitution.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'data-week="kids-declaration"' in kids_decl
+    assert "Weigh stays optional. Nothing is scored." in kids_decl
+    assert 'data-week="kids-declaration"' not in kids_const
+    assert "Ask about the papers" in kids_const
+    assert "extra_class" not in kids_const

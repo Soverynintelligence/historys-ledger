@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../app.css?v=20260831buy">
+<link rel="stylesheet" href="../../app.css?v=20260910hunt">
 </head>
 <body class="is-kids">
 <div class="app-shell">
@@ -43,15 +43,91 @@
         <span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
 
-      <div class="challenge-bar">
-        <h3>{'Ask about the papers' if extra_class == 'is-kids' else 'Don&rsquo;t just scroll — interrogate it'}</h3>
-        <p>{'Atticus only answers from the documents we hold. If we do not have the page, he stops.' if extra_class == 'is-kids' else 'History is boring when it lectures. Ask Atticus to stress-test this entry, or open the Sources tab and pull a document.'}</p>
-        <div class="chips-row">
-          <button type="button" class="atticus-chip" data-ask-atticus="What does this entry claim, in one sentence — from the documents?">One-sentence claim</button>
-          <button type="button" class="atticus-chip" data-ask-atticus="Show me one verified quotation and where it sits in the record.">Show a verified quote</button>
-          <button type="button" class="btn quiet" data-open-atticus>Ask Atticus →</button>
+      <section class="week-path" data-week="kids-declaration" data-height="kid" aria-labelledby="week-kids-decl-h">
+        <p class="mono week-kicker">Kids hunt · held cards only</p>
+        <h2 id="week-kids-decl-h">One week on this entry</h2>
+        <p class="sub">Same papers as the grown-up table. Your job is the hunt: open the card and find the marked line. If we don’t hold it, we stop. “Atticus stopped” is a win for honesty.</p>
+        <p class="note week-family"><a href="/family">Parents: Year 1 →</a></p>
+        <div class="week-hunt" id="week-hunt">
+          <h3 class="mono">Hunt · do we hold this?</h3>
+          <p>The artifact is the held card. Open the Declaration, Common Sense, or Abigail’s letter. Fun is find-the-line. If we don’t hold it, we stop.</p>
+          <p class="week-actions">
+            <button type="button" class="btn quiet" data-open-card="declaration-of-independence-1776">The Declaration</button>
+            <button type="button" class="btn quiet" data-open-card="common-sense-1776">Common Sense</button>
+            <button type="button" class="btn quiet" data-open-card="adams-family-papers">Abigail’s letter</button>
+            <button type="button" class="atticus-chip" data-ask-atticus="If we don’t hold a paper named on this entry, stop. Cite or stop.">Ask Atticus: cite or stop</button>
+          </p>
         </div>
-      </div>
+        <details class="week-sit">
+          <summary>Parent sit-with</summary>
+          <p>Sit with them while they open the same cards. The hunt is the line on the card — not a scored test. If Atticus stops, that is the win.</p>
+          <p class="week-actions"><button type="button" class="atticus-chip" data-ask-atticus="What does our Brom and Bett card actually say? Cite or stop.">Ask Atticus: what does the card say?</button></p>
+          <p>Friday dinner: what did our Brom and Bett card actually say? What was not on the card?</p>
+        </details>
+        <nav class="week-rail" aria-label="Declaration hunt week"><a href="#week-mon">Mon</a><a href="#week-tue">Tue</a><a href="#week-wed">Wed</a><a href="#week-thu">Thu</a><a href="#week-fri">Fri</a></nav>
+        <ol class="week-days">
+          
+    <li class="week-day" id="week-mon" data-day="mon">
+      <h3><span class="mono">Monday</span> The Promise</h3>
+      <p class="week-read-cue">Read “They put it on paper.”</p>
+      <p class="week-hunt-prompt"><strong>Hunt:</strong> Open the Declaration card. Find “We hold these truths to be self-evident, that all men are created equal…”</p>
+      <p class="week-actions"><button type="button" class="btn quiet" data-open-card="declaration-of-independence-1776">Open the Declaration</button><button type="button" class="atticus-chip" data-ask-atticus="Do we hold the Declaration line “We hold these truths to be self-evident, that all men are created equal” in this entry? Cite or stop.">Ask Atticus</button><button type="button" class="btn quiet" data-week-read="they-put-it-on-paper">Read this day’s section</button></p>
+      <label class="hunt-stamp">
+        <input type="checkbox" data-hunt-stamp="mon">
+        <span class="hunt-seal" aria-hidden="true"></span>
+        <span>Stamp: I opened the card and found the line</span>
+      </label>
+    </li>
+    <li class="week-day" id="week-tue" data-day="tue">
+      <h3><span class="mono">Tuesday</span> Life, Liberty…</h3>
+      <p class="week-read-cue">Read “They put it on paper.” Same Declaration card.</p>
+      <p class="week-hunt-prompt"><strong>Hunt:</strong> Same Declaration card. Find “Life, Liberty and the pursuit of Happiness” in the same sentence.</p>
+      <p class="week-actions"><button type="button" class="btn quiet" data-open-card="declaration-of-independence-1776">Open the Declaration</button><button type="button" class="atticus-chip" data-ask-atticus="Does our held Declaration card include “Life, Liberty and the pursuit of Happiness”? Cite or stop.">Ask Atticus</button><button type="button" class="btn quiet" data-week-read="they-put-it-on-paper">Read this day’s section</button></p>
+      <label class="hunt-stamp">
+        <input type="checkbox" data-hunt-stamp="tue">
+        <span class="hunt-seal" aria-hidden="true"></span>
+        <span>Stamp: I opened the card and found the line</span>
+      </label>
+    </li>
+    <li class="week-day" id="week-wed" data-day="wed">
+      <h3><span class="mono">Wednesday</span> The Island</h3>
+      <p class="week-read-cue">Read “Why they were angry.”</p>
+      <p class="week-hunt-prompt"><strong>Hunt:</strong> Open Common Sense. Find “There is something very absurd, in supposing a continent to be perpetually governed by an island.”</p>
+      <p class="week-actions"><button type="button" class="btn quiet" data-open-card="common-sense-1776">Open Common Sense</button><button type="button" class="atticus-chip" data-ask-atticus="Do we hold Paine’s Common Sense line about a continent governed by an island? Cite or stop.">Ask Atticus</button><button type="button" class="btn quiet" data-week-read="why-they-were-angry">Read this day’s section</button></p>
+      <label class="hunt-stamp">
+        <input type="checkbox" data-hunt-stamp="wed">
+        <span class="hunt-seal" aria-hidden="true"></span>
+        <span>Stamp: I opened the card and found the line</span>
+      </label>
+    </li>
+    <li class="week-day" id="week-thu" data-day="thu">
+      <h3><span class="mono">Thursday</span> Remember the Ladies</h3>
+      <p class="week-read-cue">Read “The people left out said so right away.”</p>
+      <p class="week-hunt-prompt"><strong>Hunt:</strong> Open Abigail Adams’s letter. Find “Do not put such unlimited power into the hands of the Husbands.”</p>
+      <p class="week-actions"><button type="button" class="btn quiet" data-open-card="adams-family-papers">Open Abigail’s letter</button><button type="button" class="atticus-chip" data-ask-atticus="Do we hold Abigail Adams’s line “Do not put such unlimited power into the hands of the Husbands”? Cite or stop.">Ask Atticus</button><button type="button" class="btn quiet" data-week-read="the-people-left-out-said-so-right-away">Read this day’s section</button></p>
+      <label class="hunt-stamp">
+        <input type="checkbox" data-hunt-stamp="thu">
+        <span class="hunt-seal" aria-hidden="true"></span>
+        <span>Stamp: I opened the card and found the line</span>
+      </label>
+    </li>
+    <li class="week-day" id="week-fri" data-day="fri">
+      <h3><span class="mono">Friday</span> Who used the words</h3>
+      <p class="week-read-cue">Read “The people left out said so right away.”</p>
+      <p class="week-hunt-prompt"><strong>Hunt:</strong> Open the Brom and Bett card. What does our card actually say? If we don’t hold it, we stop.</p>
+      <p class="week-actions"><button type="button" class="btn quiet" data-open-card="brom-and-bett-v-ashley-1781">Open Brom and Bett</button><button type="button" class="atticus-chip" data-ask-atticus="What does our Brom and Bett card actually say? Cite or stop.">Ask Atticus</button><button type="button" class="btn quiet" data-week-read="the-people-left-out-said-so-right-away">Read this day’s section</button></p>
+      <label class="hunt-stamp">
+        <input type="checkbox" data-hunt-stamp="fri">
+        <span class="hunt-seal" aria-hidden="true"></span>
+        <span>Stamp: I opened the named source — or saw it is not held</span>
+      </label>
+    </li>
+        </ol>
+        <p class="week-actions">
+          <button type="button" class="btn quiet" data-hunt-clear>Clear hunts</button>
+        </p>
+        <p class="note">Weigh stays optional. Nothing is scored.</p>
+      </section>
 
 
       <div class="entry-tabs" role="tablist" aria-label="Entry sections">
@@ -209,6 +285,6 @@
     <span>Powered by <a href="https://soverynintelligence.com">Soveryn</a></span>
   </footer>
 </div>
-<script src="../../app.js?v=20260831buy"></script>
+<script src="../../app.js?v=20260910hunt"></script>
 </body>
 </html>
