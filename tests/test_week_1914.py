@@ -4,15 +4,13 @@ from pathlib import Path
 from tools.source_cards import status_for
 from tools.source_records import load_all
 from tools.week_1914 import (
-    BUY_LABEL,
-    BUY_LINE,
-    BUY_URL,
     CHAPTER,
     DAYS,
     ENTRY_STEM,
     FORBIDDEN_WEEK_COPY,
     HELD_SOURCE_IDS,
     HUNT_IDS,
+    PROOF_LINE,
     SCOPE,
     slug,
     validate,
@@ -67,20 +65,20 @@ def test_hunt_artifacts_are_held_grey_book_and_ultimatum():
     assert "cite-or-stop" in html or "Cite or stop" in html
 
 
-def test_week_copy_is_a_complete_1914_set_priced_nineteen():
+def test_week_copy_is_a_complete_1914_set_as_free_proof():
     html = render_html()
     assert "complete 1914 set" in html
     assert "July crisis week" in html
     assert "not a school year" in html
     assert "not for sale" not in html.lower()
-    assert BUY_LINE in html
-    assert "$19. One week at the table." in html
+    assert PROOF_LINE in html
+    assert "Free proof of method." in html
     assert "Fourteen held documents, Monday through Friday." in html
     assert "When we don't hold the page, Atticus stops." in html
-    assert BUY_LABEL in html
-    assert BUY_URL in html
-    assert html.count(BUY_URL) == 1
-    assert f'data-week-buy href="{BUY_URL}"' in html
+    assert "$19" not in html
+    assert "Buy this week" not in html
+    assert "buy.stripe.com" not in html
+    assert "data-week-buy" not in html
     assert "Nothing is scored" in html
     assert "Weigh stays optional" in html
     assert "Parent table" in html
@@ -94,7 +92,6 @@ def test_week_copy_is_a_complete_1914_set_priced_nineteen():
     assert "mailto:" not in html
     assert "not a school year" in SCOPE
     assert "not for sale" not in SCOPE.lower()
-    assert BUY_URL == "https://buy.stripe.com/14A4gz3Bp3S67Kcf9s83C00"
 
 
 def test_week_html_does_not_invent_quotations():
@@ -130,7 +127,7 @@ def test_no_new_war_chapter_files_and_no_redirects_loop():
         assert not list(WARS_CH.glob(f"*{name}*"))
 
 
-def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
+def test_folio_and_indexes_carry_the_week_as_free_proof(tmp_path):
     build_main([str(tmp_path)])
     folio = (tmp_path / "modern-wars" / "01-how-europe-walked-in.html").read_text(
         encoding="utf-8"
@@ -142,10 +139,11 @@ def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
     assert "Grey Book No. 20" in folio
     assert "panel-weigh" in folio
     assert "quiz" not in folio.lower()
-    assert BUY_LINE in folio
-    assert BUY_LABEL in folio
-    assert BUY_URL in folio
-    assert folio.count(BUY_URL) == 1
+    assert PROOF_LINE in folio
+    assert "$19" not in folio
+    assert "Buy this week" not in folio
+    assert "buy.stripe.com" not in folio
+    assert "data-week-buy" not in folio
     assert "not for sale" not in folio.lower()
     assert "waitlist" not in folio.lower()
     assert "Family year" not in folio
@@ -156,9 +154,18 @@ def test_folio_and_indexes_carry_the_week_at_nineteen(tmp_path):
     assert "not for sale" not in wars.lower()
     assert "not a school year" in wars
     assert "$79" not in wars
-    assert BUY_URL not in wars
+    assert "$19" not in wars
+    assert "buy.stripe.com" not in wars
     home = HOME.read_text(encoding="utf-8")
+    assert "Year 1" in home
+    assert "Family year" in home
+    assert "waitlist" in home.lower()
     assert "July crisis week" in home
     assert "complete" in home
-    assert "The Bullet and the Podium" not in home
-    assert BUY_URL not in home
+    assert "Bullet and the Podium stays unpublished" in home
+    assert "07-the-bullet-and-the-podium" not in home
+    assert "$19" not in home
+    assert "Buy this week" not in home
+    assert "buy.stripe.com" not in home
+    assert "/read/modern-wars/01-how-europe-walked-in" in home
+    assert "/family#waitlist" in home

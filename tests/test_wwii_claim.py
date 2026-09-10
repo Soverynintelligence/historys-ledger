@@ -59,7 +59,8 @@ def test_homepage_and_indexes_agree_with_the_open_shelf():
 
     assert "7 entries" not in home
     assert "6 entries" in home
-    assert "The Bullet and the Podium" not in home
+    assert "Bullet and the Podium stays unpublished" in home
+    assert "07-the-bullet-and-the-podium" not in home
     assert "The Bullet and the Podium" not in us
     assert "07-the-bullet-and-the-podium" not in us
     assert "Across all 6 entries" in us
@@ -69,6 +70,10 @@ def test_homepage_and_indexes_agree_with_the_open_shelf():
     assert "1939–1945" not in home
     assert "1939–1945" not in wars
     assert "not a complete WWII set" in home or "American papers, not the war" in home
+    assert "Year 1" in home
+    assert "$19" not in home
+    assert "Buy this week" not in home
+    assert "buy.stripe.com" not in home
     assert "Victory and the Bill" in wars
     assert "How Europe walked in" in wars
     assert "of 14 quotations" in wars
