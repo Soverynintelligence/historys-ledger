@@ -152,3 +152,17 @@ def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
     assert 'data-week="kids-declaration"' not in kids_const
     assert "Ask about the papers" in kids_const
     assert "extra_class" not in kids_const
+    assert 'href="/read/kids/"' in kids_decl
+    assert ">Entries</a>" in kids_decl
+    assert 'href="/read/kids/"' in kids_const
+    assert 'href="../read/">Entries</a>' not in kids_decl
+    assert 'href="../../read/">Entries</a>' not in kids_decl
+    assert 'href="../../read/">Entries</a>' not in kids_const
+    kids_idx = (tmp_path / "kids" / "index.html").read_text(encoding="utf-8")
+    assert 'href="/read/kids/"' in kids_idx
+    assert ">Entries</a>" in kids_idx
+    assert "Grown-up details" in kids_decl
+    assert "characterisation" not in kids_decl
+    adult_founding = (tmp_path / "01-the-founding.html").read_text(encoding="utf-8")
+    assert 'href="../read/">Entries</a>' in adult_founding or ">Entries</a>" in adult_founding
+    assert 'href="/read/kids/">Kids</a>' in adult_founding or "read/kids/" in adult_founding

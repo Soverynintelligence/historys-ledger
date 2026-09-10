@@ -42,6 +42,14 @@ SCALE = [
     ("E", "The cost outweighs the achievement."),
 ]
 
+KIDS_SCALE = [
+    ("A", "The good part matters more."),
+    ("B", "The good part is bigger, but the harm still counts."),
+    ("C", "Both are true. You do not have to pick a winner."),
+    ("D", "The harm is bigger, but the promise still mattered."),
+    ("E", "The harm matters more."),
+]
+
 STATE_WORD = {
     "verified": "Verified",
     "unverified": "Cited, unchecked",
@@ -49,7 +57,7 @@ STATE_WORD = {
 }
 
 _QUOTE = re.compile(r"^> \*[\"“](.+?)[\"”]\*\s*$(?:\n^> — (.+?)$)?", re.M)
-ASSET_V = "20260910hunt"
+ASSET_V = "20260910kids"
 
 
 def _heading_id(s: str) -> str:
@@ -287,13 +295,29 @@ def shell_head(title: str, description: str, *, depth: str = "../", extra_class:
 """
 
 
-def shell_bar(active: str, *, depth: str = "../") -> str:
+def shell_bar(active: str, *, depth: str = "../", extra_class: str = "") -> str:
     def link(href: str, label: str, key: str) -> str:
         cur = ' aria-current="page"' if active == key else ""
         return f'<a href="{depth}{href}"{cur}>{label}</a>'
 
     family_cur = ' aria-current="page"' if active == "family" else ""
     mark = f"{depth}brand/hl-seal-red-256.png?v=20260814paper"
+    if extra_class == "is-kids":
+        entries_cur = ' aria-current="page"' if active == "entries" else ""
+        kids_cur = ' aria-current="page"' if active == "kids" else ""
+        nav = (
+            f'        <a href="/read/kids/"{entries_cur}>Entries</a>\n'
+            f'        <a href="/read/kids/"{kids_cur}>Kids</a>\n'
+            f'        <a href="/family"{family_cur}>Family</a>\n'
+            f'        <a href="#ask" data-open-atticus>Ask Atticus</a>'
+        )
+    else:
+        nav = (
+            f"        {link('read/', 'Entries', 'entries')}\n"
+            f"        {link('read/kids/', 'Kids', 'kids')}\n"
+            f'        <a href="/family"{family_cur}>Family</a>\n'
+            f'        <a href="#ask" data-open-atticus>Ask Atticus</a>'
+        )
     return f"""  <header class="app-bar">
     <div class="app-bar-inner">
       <a class="brand" href="{depth}">
@@ -301,10 +325,7 @@ def shell_bar(active: str, *, depth: str = "../") -> str:
         <span class="brand-text"><b>History&rsquo;s Ledger</b><i>Truth on record</i></span>
       </a>
       <nav class="app-nav" aria-label="Primary">
-        {link("read/", "Entries", "entries")}
-        {link("read/kids/", "Kids", "kids")}
-        <a href="/family"{family_cur}>Family</a>
-        <a href="#ask" data-open-atticus>Ask Atticus</a>
+{nav}
       </nav>
     </div>
   </header>
@@ -491,11 +512,12 @@ def _lead_chrome(week_html: str, extra_class: str) -> str:
 """
 
 
-def scale_opts(prefix: str) -> str:
+def scale_opts(prefix: str, scale: list[tuple[str, str]] | None = None) -> str:
+    choices = scale if scale is not None else SCALE
     return "".join(
         f'<button class="opt" type="button" aria-pressed="false" data-i="{i}">'
         f'<span class="k">{k}</span><span>{html.escape(v)}</span></button>'
-        for i, (k, v) in enumerate(SCALE)
+        for i, (k, v) in enumerate(choices)
     )
 
 
@@ -544,9 +566,38 @@ def render(
         or "<li>Every long quotation in this entry was located in a document we hold.</li>"
     )
 
+    kids_hunt = extra_class == "is-kids" and bool(week_html)
+    weigh_scale = KIDS_SCALE if kids_hunt else SCALE
     weigh = ""
     if have_scale:
-        weigh = f"""
+        if kids_hunt:
+            weigh = f"""
+    <div class="kids-weigh" id="panel-weigh">
+      <p class="mono">Optional · not a test</p>
+      <h2>What do you think?</h2>
+      <p class="sub">Nothing here is scored. You can skip this and still finish the hunt.</p>
+      <fieldset class="scale">
+        <legend>Before you hunt</legend>
+        <p class="sub" style="margin-top:.6rem"><strong>{_md(_lead(ch["achieved"]))}</strong>
+        &nbsp;·&nbsp; <strong>{_md(_lead(ch["cost"]))}</strong></p>
+        <div class="opts" id="opts0">{scale_opts("0", weigh_scale)}</div>
+        <p class="note" id="hint0">Pick a starting place if you want. Come back later if you change your mind.</p>
+      </fieldset>
+      <fieldset class="scale" style="margin-top:1rem">
+        <legend>After you hunt</legend>
+        <div class="opts" id="opts1">{scale_opts("1", weigh_scale)}</div>
+      </fieldset>
+      <div class="readout" id="readout" hidden>
+        <div class="bar"><span class="tag">Before</span><div class="track"><div class="pip was" id="pipA"></div></div></div>
+        <div class="bar"><span class="tag">After</span><div class="track"><div class="pip" id="pipB"></div></div></div>
+        <p class="moved" id="moved"></p>
+        <p class="note">There is no right answer. Both sides stay on the page.</p>
+      </div>
+      {f'<div class="takeaway"><h3>The takeaway</h3><p>{_md(ch["takeaway"])}</p></div>' if ch["takeaway"] else ""}
+    </div>
+"""
+        else:
+            weigh = f"""
     <div class="panel" id="panel-weigh" role="tabpanel" aria-labelledby="tab-weigh">
       <div class="panel-mark"><span class="numeral">VI</span><span class="mono">Optional</span></div>
       <h2>Weigh it — only if you want to.</h2>
@@ -597,7 +648,91 @@ def render(
         f'<span class="of"> of {total} long quotations</span></p>'
     )
 
-    body = f"""  <main class="app-main">
+    if extra_class == "is-kids":
+        dek = (
+            "Same papers as the grown-up table. Easier words around the quotes. "
+            "Tap a quote to open the card. If Atticus cannot show the line, he stops."
+        )
+    elif week_html:
+        dek = (
+            "A complete 1914 set — July crisis week on this page. Open any tab. "
+            "Tap a held card. Weigh stays optional."
+        )
+    else:
+        dek = (
+            "Open any tab. In Read, tap a primary source or a long quotation to open its card. "
+            "Atticus floats bottom-right — ask him anything on the record."
+        )
+
+    if kids_hunt:
+        kid_established = (
+            f"""
+      <div class="two">
+        <div class="col-card gain"><h3>The promise</h3><p>{_md(ch["achieved"])}</p></div>
+        <div class="col-card cost"><h3>Who was left out</h3><p>{_md(ch["cost"])}</p></div>
+      </div>
+      <p class="note">Both sides come from the same papers. We did not make this up.</p>
+"""
+            if have_scale
+            else established
+        )
+        body = f"""  <main class="app-main">
+    <article class="app-leaf narrow" data-entry="{html.escape(ch["stem"])}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding-top:1.1rem">
+        <p class="mono" style="margin:0">Kids hunt</p>
+        <img src="../brand/hl-seal-red-cut.png?v=20260814paper" width="84" height="84" alt="History's Ledger" class="entry-seal"
+             srcset="../brand/hl-seal-red-256.png?v=20260814paper 256w, ../brand/hl-seal-red-cut.png?v=20260814paper 900w"
+             sizes="84px">
+      </div>
+      <h1>{_md(ch["name"])} <em>{_md(ch["subtitle"])}</em></h1>
+      <p class="sub">{dek}</p>
+{_lead_chrome(week_html, extra_class)}
+
+      <section class="kids-story" aria-labelledby="kids-story-h">
+        <p class="mono">The story</p>
+        <h2 id="kids-story-h">Read the paper, then the people left out.</h2>
+        {kid_established}
+        <div class="prose" id="panel-read">
+{prose}
+        </div>
+      </section>
+{weigh}
+
+      <details class="grown-up-details">
+        <summary>Grown-up details</summary>
+        {tally}
+        <h3>The cards</h3>
+        <p class="sub">Every long quotation shows where it came from. Tap one to open the card.</p>
+        {quote_cards(ch, entries, span_to)}
+        {callout_list(ch, callout_to)}
+        <h3>What we could not check</h3>
+        <p class="sub">Of {total} long quotations in this entry, {c["verified"]} were located in a document we hold.</p>
+        <ul class="unknown">{unknown_rows}</ul>
+        <p class="note">Where the record stops, we stop.</p>
+      </details>
+
+      <script type="application/json" id="source-cards-data">{json.dumps(cards, ensure_ascii=False)}</script>
+{source_drawer_html()}
+
+      <div class="atticus-rail" id="ask-atticus">
+        <div class="at-head">
+          <strong>Atticus is on every page</strong>
+          <span class="mono">Floating · bottom-right</span>
+        </div>
+        <p class="at-body">The button follows you. He answers from the papers we hold.
+          If he cannot show the line, he stops.
+          <button type="button" class="btn quiet" data-open-atticus style="margin-left:.35rem">Open Atticus →</button></p>
+      </div>
+
+      <div class="row" style="margin-top:1.4rem">
+        <a class="btn quiet" href="./">Kids path</a>
+        {nav}
+      </div>
+    </article>
+  </main>
+"""
+    else:
+        body = f"""  <main class="app-main">
     <article class="app-leaf narrow" data-entry="{html.escape(ch["stem"])}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding-top:1.1rem">
         <p class="mono" style="margin:0">Ledger entry</p>
@@ -606,13 +741,7 @@ def render(
              sizes="84px">
       </div>
       <h1>{_md(ch["name"])} <em>{_md(ch["subtitle"])}</em></h1>
-      <p class="sub">{
-        "Same papers as the parent table. The words around them are easier. Tap a quote to see it in the document. Atticus still stops when he cannot cite."
-        if extra_class == "is-kids"
-        else "A complete 1914 set — July crisis week on this page. Open any tab. Tap a held card. Weigh stays optional."
-        if week_html
-        else "Open any tab. In Read, tap a primary source or a long quotation to open its card. Atticus floats bottom-right — ask him anything on the record."
-      }</p>
+      <p class="sub">{dek}</p>
       {tally}
       <div class="progress-rail" data-progress-rail aria-hidden="true">
         <span></span><span></span><span></span><span></span><span></span><span></span>
@@ -696,7 +825,7 @@ def render(
             f"{ch['name']} — established facts, primary sources, and what remains unchecked.",
             extra_class=extra_class,
         )
-        + shell_bar("entries")
+        + shell_bar("entries", extra_class=extra_class)
         + body
         + shell_foot()
     )
@@ -708,6 +837,7 @@ def index_page(
     *,
     collection_note: str = "",
     entry_notes: dict[str, str] | None = None,
+    extra_class: str = "",
 ) -> str:
     notes = entry_notes or {}
     rows = []
@@ -762,7 +892,10 @@ def index_page(
             "History's Ledger — the entries",
             "Primary-source history entries. Every long quotation is marked verified, cited-unchecked, or unverified.",
         )
-        + shell_bar("entries")
+        + shell_bar(
+            "kids" if extra_class == "is-kids" else "entries",
+            extra_class=extra_class,
+        )
         + body
         + shell_foot()
     )
@@ -851,6 +984,7 @@ def _build_collection(
         by_chapter,
         collection_note=collection_note,
         entry_notes=entry_notes,
+        extra_class=extra_class,
     )
     if extra_class:
         idx = idx.replace("<body>", f'<body class="{html.escape(extra_class, quote=True)}">', 1)
@@ -863,9 +997,10 @@ def _build_collection(
     if extra_class == "is-kids":
         idx = idx.replace(
             "Each entry states what is established, shows the documents,\n      says what it could not check, and hands the judgement back to you.",
-            "Ages 10–12. Same documents as the parent table. The words around the quotes are easier. The quotes are still the real ones.",
+            "Hunt the held papers. Same documents as the parent table. Easier words around the real quotes.",
             1,
         )
+        idx = idx.replace("<h1>Read the record.</h1>", "<h1>Your papers.</h1>", 1)
     if depth != "../":
         idx = idx.replace('href="../', f'href="{depth}')
         idx = idx.replace('src="../', f'src="{depth}')
