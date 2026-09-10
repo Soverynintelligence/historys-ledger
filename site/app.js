@@ -706,7 +706,7 @@
             if (status) {
               status.textContent =
                 res.d.message ||
-                "You're on the list. We'll email when Family year opens.";
+                "You're on the list. We'll email when Year 1 opens.";
               status.className = "wait-status note is-ok";
             }
             form.reset();
