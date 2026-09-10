@@ -139,3 +139,12 @@ def test_build_folios_omits_unpublished_bullet_from_open_us_set(tmp_path):
     assert "family.html" not in wars
     assert 'href="/family"' in wwii
     assert "family.html" not in wwii
+    kids_decl = (tmp_path / "kids" / "01-the-declaration.html").read_text(
+        encoding="utf-8"
+    )
+    kids_const = (tmp_path / "kids" / "02-the-constitution.html").read_text(
+        encoding="utf-8"
+    )
+    assert 'data-week="kids-declaration"' in kids_decl
+    assert "Weigh stays optional. Nothing is scored." in kids_decl
+    assert 'data-week="kids-declaration"' not in kids_const

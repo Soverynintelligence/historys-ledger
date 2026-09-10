@@ -49,7 +49,7 @@ STATE_WORD = {
 }
 
 _QUOTE = re.compile(r"^> \*[\"“](.+?)[\"”]\*\s*$(?:\n^> — (.+?)$)?", re.M)
-ASSET_V = "20260831buy"
+ASSET_V = "20260910hunt"
 
 
 def _heading_id(s: str) -> str:
@@ -791,6 +791,10 @@ def _build_collection(
             from tools.week_1914 import render_html as week_render
 
             week_html = week_render()
+        elif ch["stem"] == "01-the-declaration" and extra_class == "is-kids":
+            from tools.week_kids_declaration import render_html as kids_week_render
+
+            week_html = kids_week_render()
         page = render(
             ch,
             ch_entries,
