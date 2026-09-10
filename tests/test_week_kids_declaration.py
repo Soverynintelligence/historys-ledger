@@ -142,6 +142,8 @@ def test_folio_carries_hunt_on_declaration_only(tmp_path):
     assert 'data-week="kids-declaration"' not in const
     assert "data-hunt-stamp" not in const
     assert "One week on this entry" not in const
+    assert "Ask about the papers" in const
+    assert "extra_class" not in const
     assert "Hunt week" not in kids_idx
     assert "quiz" not in decl.lower()
     assert "$19" not in decl
