@@ -99,6 +99,31 @@ def test_an_elided_quotation_locates_every_fragment_separately():
     assert len(e["passages"]) == 2
 
 
+def test_overlapping_held_texts_follow_the_nearest_callout():
+    shared = "the enforced separation of the two races stamps the colored race with a badge of inferiority"
+    dissent = "Our Constitution is color-blind, and neither knows nor tolerates classes among citizens."
+    majority = (
+        "---\nid: plessy-majority\ntitle: Plessy v. Ferguson\ndate: 1896\n"
+        "type: document\nrights: us-government\nurl: https://example.org/p\n"
+        "callout: Plessy v. Ferguson, 1896\ncited_by: [01-x]\n---\n\n"
+        + shared + "\n" + dissent + "\n"
+    )
+    harlan = (
+        "---\nid: plessy-dissent\ntitle: Harlan's dissent, Plessy v. Ferguson\ndate: 1896\n"
+        "type: document\nrights: us-government\nurl: https://example.org/h\n"
+        "callout: Harlan's dissent, Plessy v. Ferguson, 1896\ncited_by: [01-x]\n---\n\n"
+        + shared + "\n" + dissent + "\n"
+    )
+    chapter = (
+        f'"{shared}"\n\n**Primary Source:** Plessy v. Ferguson, 1896.\n\n'
+        f'"{dissent}"\n\n**Primary Source:** Harlan\'s dissent, Plessy v. Ferguson, 1896.\n'
+    )
+    ch, sr = _dirs(chapter, ("plessy-dissent.md", harlan), ("plessy-majority.md", majority))
+    entries = {e["span"]: e for e in apparatus(ch, sr)}
+    assert entries[shared]["source_id"] == "plessy-majority"
+    assert entries[dissent]["source_id"] == "plessy-dissent"
+
+
 def test_counts_add_up_to_every_quotation():
     ch, sr = _dirs('"perpetually governed by an island"\n\n"a thing nobody ever wrote down"\n',
                    _doc_record())
@@ -106,3 +131,26 @@ def test_counts_add_up_to_every_quotation():
     c = counts(entries)
     assert sum(c.values()) == len(entries) == 2
     assert c["verified"] == 1 and c["unsourced"] == 1
+
+
+def test_civil_rights_badge_of_inferiority_is_the_plessy_majority():
+    here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    entries = [
+        e for e in apparatus(
+            os.path.join(here, "content", "chapters"),
+            os.path.join(here, "content", "sources"),
+        )
+        if e["chapter"] == "05-civil-rights"
+    ]
+    assert len(entries) == 3
+    assert all(e["status"] == "verified" for e in entries)
+    by_span = {e["span"]: e for e in entries}
+    badge = by_span[
+        "enforced separation of the two races stamps the colored race with a badge of inferiority"
+    ]
+    assert badge["source_id"] == "plessy-v-ferguson-1896"
+    assert badge["source_title"] == "Plessy v. Ferguson"
+    color_blind = by_span[
+        "Our Constitution is color-blind, and neither knows nor tolerates classes among citizens."
+    ]
+    assert color_blind["source_id"] == "harlan-dissent-plessy-1896"
