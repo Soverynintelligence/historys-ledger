@@ -10,9 +10,10 @@
 
 After the Civil War, America amended its own Constitution three times to make the freed slaves equal citizens: the 13th ended slavery, the 14th guaranteed equal protection, the 15th guaranteed the vote. On paper, by 1870, the promise of all men are created equal was finally law.
 
-Then the country broke it. Reconstruction was abandoned in 1877, federal troops withdrawn, and the South rebuilt subjugation under a new name: **Jim Crow.** Poll taxes and literacy tests erased the Black vote. Segregation became law. And in 1896 the Supreme Court blessed it:
+Then the country broke it. Reconstruction was abandoned in 1877, federal troops withdrawn, and the South rebuilt subjugation under a new name: **Jim Crow.** Poll taxes and literacy tests erased the Black vote. Segregation became law. And in 1896 the Supreme Court blessed it. The majority dismissed the plaintiff's claim that segregation branded Black citizens as inferior:
 
 > *"enforced separation of the two races stamps the colored race with a badge of inferiority"*
+> — *Plessy v. Ferguson* majority opinion
 
 **Primary Source:** *Plessy v. Ferguson*, 1896 — the "separate but equal" doctrine.
 

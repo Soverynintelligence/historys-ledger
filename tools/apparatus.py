@@ -27,6 +27,7 @@ from __future__ import annotations
 import os
 import re
 
+from tools.callouts import callouts_in
 from tools.quotation_match import fragments
 from tools.quoted_spans import MIN_QUOTE_CHARS, norm, quoted_spans
 from tools.source_records import load_all
@@ -88,6 +89,31 @@ def _find_in_record(span: str, record: dict) -> list[dict] | None:
     return found or None
 
 
+def _located_in_cited(span: str, cited: list[dict]) -> list[tuple[dict, list[dict]]]:
+    found = []
+    for record in cited:
+        passages = _find_in_record(span, record)
+        if passages:
+            found.append((record, passages))
+    return found
+
+
+def _pick_located(
+    span: str, chapter: str, located: list[tuple[dict, list[dict]]]
+) -> tuple[dict, list[dict]]:
+    """If several cited records contain the span, use the nearest following callout."""
+    if len(located) == 1:
+        return located[0]
+    pos = chapter.find(span)
+    if pos < 0:
+        return located[0]
+    by_callout = {record.get("callout"): (record, passages) for record, passages in located}
+    for label in callouts_in(chapter[pos + len(span) :]):
+        if label in by_callout:
+            return by_callout[label]
+    return located[0]
+
+
 def apparatus(chapters_dir: str, sources_dir: str) -> list[dict]:
     """One entry per quotation in every chapter, with where it is written."""
     records = load_all(sources_dir) if os.path.isdir(sources_dir) else []
@@ -104,9 +130,8 @@ def apparatus(chapters_dir: str, sources_dir: str) -> list[dict]:
                 continue
             entry = {"chapter": stem, "span": span.strip()}
 
-            located = next(
-                ((r, p) for r in cited for p in [_find_in_record(span, r)] if p), None
-            )
+            located_hits = _located_in_cited(span, cited)
+            located = _pick_located(span, chapter, located_hits) if located_hits else None
             if located:
                 record, passages = located
                 entry.update(
