@@ -653,9 +653,14 @@ def render(
             "Same papers as the grown-up table. Easier words around the quotes. "
             "Tap a quote to open the card. If Atticus cannot show the line, he stops."
         )
-    elif week_html:
+    elif week_html and ch["stem"] == "01-how-europe-walked-in":
         dek = (
             "A complete 1914 set — July crisis week on this page. Open any tab. "
+            "Tap a held card. Weigh stays optional."
+        )
+    elif week_html:
+        dek = (
+            "A week on this page, with a shorter path. Open any tab. "
             "Tap a held card. Weigh stays optional."
         )
     else:
@@ -943,6 +948,10 @@ def _build_collection(
             from tools.week_1914 import render_html as week_render
 
             week_html = week_render()
+        elif ch["stem"] == "03-reconstruction":
+            from tools.week_reconstruction import render_html as recon_week
+
+            week_html = recon_week()
         elif ch["stem"] == "01-the-declaration" and extra_class == "is-kids":
             from tools.week_kids_declaration import render_html as kids_week_render
 
