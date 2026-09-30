@@ -17,7 +17,7 @@ Start with what that looked like from the inside. In August 1865 a freedman name
 
 **Primary Source:** Letter published in the *Cincinnati Commercial*, 1865.
 
-He then named the bill. Thirty-two years of his labor, twenty of Mandy's, at interest, minus clothing and three doctor visits. Send it, he wrote, by Adams Express. He asked, before anyone packed a trunk, whether there would be any safety for Milly and Jane. It is funny, and it is a ledger, and it is a man exercising something he had never had: standing.
+He then named the bill. Thirty-two years of his labor, twenty of Mandy's, at interest, minus clothing and three doctor visits. Send it, he wrote, by Adams Express. He asked whether there would be any safety for Milly and Jane.
 
 ## The Second Founding
 
@@ -29,15 +29,15 @@ Three amendments in five years rewrote the country's constitutional order.
 
 **Primary Source:** U.S. Constitution, Amendments XIII, XIV, XV.
 
-The Fourteenth put on paper what 1776 had only claimed. It said:
+The Fourteenth made citizenship a matter of birth, and bound the states to it:
 
 > *"All persons born or naturalized in the United States, and subject to the jurisdiction thereof, are citizens of the United States and of the State wherein they reside."*
 
 **Primary Source:** Fourteenth Amendment, ratified July 1868.
 
-The same section told the states they could not deny any person the equal protection of the laws. That is the sentence later used in *Brown*. It was written here.
+The same section told the states they could not deny any person the equal protection of the laws. *Brown* later used that sentence.
 
-The Fifteenth closed the next door, or tried to:
+The Fifteenth said the vote could not be taken away for race:
 
 > *"The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of race, color, or previous condition of servitude."*
 
@@ -63,7 +63,7 @@ And they went looking for their families. For decades, Black newspapers carried 
 
 **Primary Source:** Freedmen's Bureau records, 1865–1872; "Information Wanted" advertisements, Black newspapers.
 
-She was trying to find six children. The ad asked anyone who knew them to write. That is what freedom looked like in the first winter: a paid notice, a last known county, a hope that a name still meant a person.
+She was trying to find six children. The ad asked anyone who knew them to write.
 
 ## The Counter-Revolution
 
@@ -71,7 +71,7 @@ The response was organized violence, and it was not a fringe.
 
 **A parent can skip from here to The Courts.** The next two paragraphs are written for a high-school reader. They name a massacre and the Klan hearings. A younger reader can leave them unread and still follow the week.
 
-The Ku Klux Klan formed in 1866. Elections were carried by terror: officeholders murdered, voters driven from polls, schoolhouses burned. In April 1873 in **Colfax, Louisiana**, a white militia killed an estimated 60 to 150 Black men, most after they had surrendered.
+The Ku Klux Klan formed in 1866. Elections were carried by terror. Officeholders were murdered and voters driven from the polls. Schoolhouses were burned. In April 1873 in **Colfax, Louisiana**, a white militia killed an estimated 60 to 150 Black men, most after they had surrendered.
 
 Congress knew. It held hearings in 1871 and 1872 and printed the sworn testimony in thirteen volumes. Black witnesses described night raids. We do not yet hold a clean official page of that report, so the card for those hearings stays a citation. Congress also passed Enforcement Acts letting federal courts prosecute. For a few years, they did.
 
@@ -89,7 +89,7 @@ In the *Slaughter-House Cases* (1873) it read the Fourteenth's protections down 
 
 **Primary Source:** *United States v. Cruikshank*, 1876.
 
-A mob was not a state. The federal government, on that reading, could not reach it. The law remained on the books. It had been made unenforceable.
+The law remained on the books. It had been made unenforceable.
 
 ## The Deal
 
