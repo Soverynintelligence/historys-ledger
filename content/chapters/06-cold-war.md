@@ -4,90 +4,125 @@
 > *"we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex."*
 > — **Dwight D. Eisenhower**, Farewell Address, January 17, 1961
 
+**Primary Source:** Eisenhower Farewell Address, January 17, 1961.
+
 ## The Threat Was Real
 
 Begin here, because the rest does not make sense otherwise: the Soviet Union was a tyranny, and the people who said so were right.
 
 It ran labor camps, starved and deported whole populations, shot its own officer corps, and crushed every attempt to leave — East Germany in 1953, Hungary in 1956, Czechoslovakia in 1968. It built a wall through a city to stop its citizens escaping and shot people climbing it. Opposition to that was not paranoia. It was accurate.
 
-George Kennan, the American diplomat who understood Moscow best, framed the response in 1946:
+George Kennan, the American chargé in Moscow, sent the State Department a long telegram in February 1946. The official print we hold has him writing:
 
-> *…a long-term, patient but firm and vigilant containment of Russian expansive tendencies.*
-> — **George Kennan**, the "X" article, *Foreign Affairs*, 1947
+> *"In summary, we have here a political force committed fanatically to the belief that with US there can be no permanent modus vivendi"*
+> — **George F. Kennan**, Long Telegram, February 22, 1946
 
-**Primary Source:** Kennan's "Long Telegram," February 1946, and the "X" article, 1947.
+**Primary Source:** Kennan's Long Telegram, February 1946.
+
+A year later he published an article in *Foreign Affairs* under the name X. We do not hold that magazine, so nothing from it is quoted here.
 
 ## The Answer
 
-What America did next was, by the standards of victorious powers, extraordinary. It rebuilt its enemies.
+President Truman went before Congress on March 12, 1947:
 
-The **Marshall Plan** sent roughly $13 billion to Western Europe — including to Germany, whose cities American bombers had flattened three years earlier. When the Soviets blockaded West Berlin in 1948, the U.S. and Britain fed a city of two million by air for eleven months.
+> *"I believe that it must be the policy of the United States to support free peoples who are resisting attempted subjugation by armed minorities or by outside pressures."*
+> — **Harry S. Truman**, address to Congress, March 12, 1947
 
-**Primary Source:** Marshall's Harvard address, June 5, 1947; Berlin Airlift records, 1948–49.
+**Primary Source:** Truman Doctrine address, March 12, 1947.
 
-Western Europe emerged prosperous and democratic and stayed that way. Whatever else is on this ledger, that belongs on it.
+The United States then rebuilt its enemies.
+
+Secretary of State George Marshall spoke at Harvard on June 5, 1947:
+
+> *"It is logical that the United States should do whatever it is able to do to assist in the return of normal economic health in the world, without which there can be no political stability and no assured peace."*
+> — **George C. Marshall**, Harvard address, June 5, 1947
+
+**Primary Source:** Marshall's Harvard address, June 5, 1947.
+
+The speech does not name a dollar total. Later bills did. We do not hold those appropriation tables here.
+
+When the Soviets blockaded West Berlin in 1948, the United States and Britain flew supplies into the city. We do not hold the airlift daily reports, so that card stays a citation.
+
+**Primary Source:** Berlin Airlift records, 1948–49.
+
+Western Europe came out of those years prosperous and democratic, and it stayed that way.
 
 ## The Price at Home
 
-Then the fear turned inward, and the country did to itself what no enemy had managed.
+Then the fear turned inward.
 
-Senator Joseph McCarthy never exposed a significant spy. What he produced was a machine for destroying people on accusation — loyalty oaths, blacklists, careers ended by rumor. Real Soviet espionage existed; the hunt for it consumed thousands of people who had nothing to do with it.
+Senator Joseph McCarthy never exposed a significant spy. What he produced was a machine for destroying people on accusation — loyalty oaths, blacklists, careers ended by rumor. Real Soviet espionage existed. The hunt for it consumed people who had nothing to do with it.
 
-The end came not from a court but from television, when an Army lawyer said the thing everyone had been thinking:
+The end came on television. On June 9, 1954, an Army lawyer, Joseph Welch, spoke to McCarthy. The Senate Historical Office page we hold records him saying:
 
-> *Have you no sense of decency, sir, at long last? Have you left no sense of decency?*
+> *"Let us not assassinate this lad further, senator. You have done enough. Have you no sense of decency?"*
 > — **Joseph Welch**, Army–McCarthy hearings, June 9, 1954
 
 **Primary Source:** Army–McCarthy hearing transcripts, 1954.
 
-Less remembered, and larger: **Executive Order 10450** in 1953 made "sexual perversion" grounds for dismissal from federal work. Thousands of gay Americans lost their jobs and, often, everything else. That purge ran for decades after McCarthy was disgraced.
+We do not hold the full printed hearing volumes. A longer form of that question is often printed. It is not on the page we have, so it is not printed here.
+
+**A parent can skip this paragraph.** It quotes the 1953 loyalty order.
+
+Less remembered, and larger: **Executive Order 10450** listed, among the grounds for dismissal from federal work:
+
+> *"Any criminal, infamous, dishonest, immoral, or notoriously disgraceful conduct, habitual use of intoxicants to excess, drug addiction, sexual perversion."*
 
 **Primary Source:** Executive Order 10450, April 27, 1953.
 
+Gay Americans lost federal jobs under that clause. The order outlasted McCarthy.
+
 ## The Price Abroad
+
+**A parent can skip from here to The Two Men Who Said No.** The next paragraphs name coups and prisons. A younger reader can leave them unread and still follow the week.
 
 The stated principle was self-determination. The practice, repeatedly, was not.
 
 In **Iran, 1953**, the CIA helped overthrow an elected prime minister and restored the Shah. In **Guatemala, 1954**, it removed an elected president after his land reform threatened a fruit company. In **Chile, 1973**, the United States worked to destabilize an elected government, and what followed was Pinochet. Across Latin America, Africa and Southeast Asia, Washington armed dictators because they were anti-communist, and their prisons filled with people whose crime was opposing them.
 
-Congress eventually investigated its own government and published the findings.
+Congress investigated and published the findings. We do not hold a clean official page of the Church Committee reports, so that card stays a citation.
 
 **Primary Source:** Church Committee reports, 1975–76.
 
-And the proxy wars were not proxies to the people who lived there. Korea: about 36,000 Americans dead, and two to three million Koreans. Vietnam: 58,000 Americans, and estimates of Vietnamese dead running into the millions.
+Korea and Vietnam were not proxies to the people who lived there. Americans died in both wars, and so did Koreans and Vietnamese. We do not hold a casualty table in this entry, so the counts stay off the page.
 
-There is one more cost, and it is the one that connects this chapter to the rest of this book. America was preaching freedom abroad while enforcing segregation at home, and the Soviets used it in propaganda everywhere. In 1952 the U.S. government filed a brief in *Brown v. Board of Education* arguing that segregation was damaging American foreign policy. The Cold War did not create the civil rights movement — Black Americans did that. But it gave the federal government a reason of state to finally listen.
+America was preaching freedom abroad while enforcing segregation at home, and the Soviets used that fact. In 1952 the U.S. government filed a brief in *Brown v. Board of Education* arguing that segregation was damaging American foreign policy. The Cold War did not create the civil rights movement. Black Americans did that. The federal government now had a reason of state to listen.
 
 ## The Two Men Who Said No
 
-Deterrence is usually described as a system. Twice, it came down to one person's judgment.
+Deterrence is usually described as a system. In October 1962 it was also a speech, and later a story about one Soviet officer.
 
-October 1962, during the Cuban Missile Crisis: a Soviet submarine, out of contact and under depth charges, considered launching a nuclear torpedo. Consent had to be unanimous among three senior officers. **Vasili Arkhipov** refused. The account was reconstructed decades later from Soviet sources, so details are still argued.
+President Kennedy told the country on October 22:
 
-September 1983: Soviet early-warning satellites reported American missiles inbound. **Stanislav Petrov**, the duty officer, judged it a malfunction and reported it as such rather than passing it up the chain. It was a malfunction.
+> *"It shall be the policy of this Nation to regard any nuclear missile launched from Cuba against any nation in the Western Hemisphere as an attack by the Soviet Union on the United States, requiring a full retaliatory response upon the Soviet Union."*
+> — **John F. Kennedy**, radio and television report, October 22, 1962
+
+**Primary Source:** Kennedy address on Cuba, October 22, 1962.
+
+A Soviet submarine, out of contact and under depth charges, is said to have considered a nuclear torpedo. Consent had to be unanimous among three senior officers. **Vasili Arkhipov** is the man later named as the one who refused. The account was reconstructed decades later from Soviet sources. Details are still argued. We do not hold those accounts, and we do not quote them.
+
+September 1983: Soviet early-warning satellites reported American missiles inbound. **Stanislav Petrov**, the duty officer, judged it a malfunction and reported it as such rather than passing it up the chain. It was a malfunction. We do not hold his testimony. The card is a citation.
 
 **Primary Source:** Soviet naval accounts released after 1991; Petrov's own testimony.
 
-We were not only saved by strategy. We were saved, at least twice, by a man deciding not to.
-
 ## The Ending
 
-The Wall opened on November 9, 1989. The Soviet Union dissolved on December 26, 1991. Hundreds of millions of people became free, and it happened with far less blood than anyone had a right to expect.
+The Wall opened on November 9, 1989. The Soviet Union dissolved on December 26, 1991.
 
-Americans usually tell this as a story about American resolve, and pressure was real. But the single most consequential decision of 1989 was **Mikhail Gorbachev's**, and it was a decision *not* to act: when Eastern Europe walked away, he declined to send tanks, as his predecessors had in 1956 and 1968. Empires do not usually end because the man at the top refuses to shoot.
+Americans usually tell this as a story about American resolve, and pressure was real. The decision of 1989 that mattered most inside the bloc was **Mikhail Gorbachev's**, and it was a decision *not* to act: when Eastern Europe walked away, he declined to send tanks, as his predecessors had in 1956 and 1968.
 
 ## What We Learned
 
 **The honest ledger:**
 
-✅ **The achievement is real and it is enormous.** Two powers with tens of thousands of nuclear weapons stood opposed for forty-five years and never fought each other directly. Western Europe was rebuilt as free and prosperous. A genuinely murderous empire ended — mostly peacefully — and its subject nations chose their own governments. Measured against how the twentieth century's other great confrontations ended, that is close to a miracle.
+✅ **The achievement is real.** Two nuclear-armed powers stood opposed from the late 1940s until 1991 and never fought each other directly. Western Europe was rebuilt as free and prosperous. The Soviet Union ended, mostly without a last great European war, and the subject nations chose their own governments.
 
-❌ **The failure is just as real.** In the name of freedom, the United States overthrew elected governments and propped up torturers, and the people living under them experienced America as the thing standing on their necks. Millions died in wars fought on other people's soil over an argument between Washington and Moscow. At home, the fear produced blacklists, loyalty oaths, and a purge of gay Americans that outlived the man it is named after. And the peace held partly by luck — twice by one officer's nerve.
+❌ **The failure is real.** In the name of freedom the United States overthrew elected governments and armed men who filled prisons. People died in Korea and in Vietnam. At home the fear produced blacklists, loyalty oaths, and a purge written into an executive order. One famous near-launch rests on an account that is still argued.
 
-**The takeaway:** This chapter is about means and ends. The end was defensible; much of what was done to reach it was not, and was known not to be at the time by the people doing it. A country can be right about its enemy and wrong about its methods, and both facts survive into the record intact. The most useful question is not "were we the good guys" — it is narrower and harder: *which of these things were necessary, and which did we do because we were frightened and could?* Here are the documents. You decide.
+**The takeaway:** The end can be defensible while the methods are not, and both facts can sit in the same record. The useful question is narrower than "were we the good guys." It is: which of these things were necessary, and which were done because the country was frightened and could? Here are the documents. You decide.
 
 ---
 
-**Further Reading — Primary Sources:** Kennan's Long Telegram and "X" article · Truman Doctrine address (1947) · Marshall's Harvard address (1947) · NSC-68 (1950) · Executive Order 10450 (1953) · Army–McCarthy transcripts (1954) · Eisenhower's Farewell Address (1961) · Church Committee reports (1975–76).
+**Further Reading — Primary Sources:** Kennan's Long Telegram (1946) · Truman Doctrine address (1947) · Marshall's Harvard address (1947) · Executive Order 10450 (1953) · Army–McCarthy hearings (1954) · Eisenhower's Farewell Address (1961) · Kennedy's Cuba address (1962) · Church Committee reports (1975–76).
 **Books:** *The Cold War: A New History* — John Lewis Gaddis · *The Brothers* — Stephen Kinzer · *Cold War Civil Rights* — Mary L. Dudziak.
 **Next Chapter:** The Unfinished Work — From the Great Society to Today.
