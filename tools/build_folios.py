@@ -956,6 +956,10 @@ def _build_collection(
             from tools.week_cold_war import render_html as cold_war_week
 
             week_html = cold_war_week()
+        elif ch["stem"] == "04-standard-oil":
+            from tools.week_standard_oil import render_html as oil_week
+
+            week_html = oil_week()
         elif ch["stem"] == "01-the-declaration" and extra_class == "is-kids":
             from tools.week_kids_declaration import render_html as kids_week_render
 
