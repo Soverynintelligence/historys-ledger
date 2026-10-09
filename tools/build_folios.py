@@ -952,6 +952,10 @@ def _build_collection(
             from tools.week_reconstruction import render_html as recon_week
 
             week_html = recon_week()
+        elif ch["stem"] == "06-cold-war":
+            from tools.week_cold_war import render_html as cold_war_week
+
+            week_html = cold_war_week()
         elif ch["stem"] == "01-the-declaration" and extra_class == "is-kids":
             from tools.week_kids_declaration import render_html as kids_week_render
 
