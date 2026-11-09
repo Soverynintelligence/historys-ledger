@@ -1,6 +1,6 @@
 /* History's Ledger — cache the ledger for offline reading.
    Atticus and the Family waitlist stay on the network. */
-var CACHE = "hl-ledger-v4";
+var CACHE = "hl-ledger-v5";
 
 var PRECACHE = [
   "/",
@@ -8,6 +8,9 @@ var PRECACHE = [
   "/family",
   "/family/",
   "/family.html",
+  "/ai-history-tutor",
+  "/ai-history-tutor/",
+  "/ai-history-tutor.html",
   "/app.css",
   "/app.js",
   "/manifest.webmanifest",
